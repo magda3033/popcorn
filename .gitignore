@@ -1,6 +1,6 @@
 # Project .gitignore
 # Secrets
-/main/secrets.py
+/main/app_secrets.py
 
 # SOURCE: https://gist.github.com/santoshpurbey/6f982faf1eacdac153ffd86a3a694239
 # Byte-compiled / optimized / DLL files
