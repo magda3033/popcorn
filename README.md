@@ -11,11 +11,12 @@ Our task was to create an app as a Team - we chose to do so in Django.
   - TODO
 
 ### Setup
-  - Install dependencies using Pipfile lock.
-  - Copy `app_secrets.py` into `./main` folder
+  - Install dependencies using [Pipfile](https://pipenv-fork.readthedocs.io/en/latest/basics.html "Pipfile basics") lock.
+  - Copy `app_secrets.py` (stored on our Microsoft Teams "Files" tab) into `./main` folder
   - Run command `python manage.py migrate`
   - Run command `python manage.py runserver`
   - Connect to the website
+  - If everything works, you are good to go to create your own branch.
 
 ### Todos
   - Fix login style
