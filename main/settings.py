@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'popcorn.apps.PopcornConfig'
+    'popcorn.apps.PopcornConfig',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
