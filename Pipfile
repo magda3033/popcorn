@@ -6,6 +6,8 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+django-extensions = "*"
+pydotplus = "*"
 django-registration = "==3.1.1"
 Django = "==3.1.2"
 pillow = "*"
