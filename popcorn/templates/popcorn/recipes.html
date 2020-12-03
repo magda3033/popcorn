@@ -1,6 +1,12 @@
 {% extends "popcorn/base.html" %}
-{% block title %}{{ recipe.name }}{% endblock %}
+{% block title %}Przepisy{% endblock %}
 
 {% block content %}
-    tutaj cos bedzie
+    <ul>
+        {% for r in recipes %}
+            <li>
+                <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

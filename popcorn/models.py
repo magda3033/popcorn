@@ -73,7 +73,7 @@ class Recipe(models.Model):
         return self.deleted_on is not None
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name, allow_unicode=True)
+        self.slug = slugify(self.name, allow_unicode=False)
         super().save(*args, **kwargs)
 
 

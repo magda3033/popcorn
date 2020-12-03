@@ -13,13 +13,12 @@ def index(request):
     return render(request, 'popcorn/index.html')
 
 
-def recipe(request, slug):
-    print(slug)
+def recipe(request):
     return render(request, 'popcorn/recipe.html')
 
 
 def recipes(request):
-    return render(request, 'popcorn/recipes.html')
+    return render(request, 'popcorn/recipes.html', {'recipes':  Recipe.objects.all()})
 
 
 class RecipeView(generic.DetailView):
