@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('popcorn', '0001_initial'),
     ]
@@ -13,6 +12,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recipe',
             name='difficulty',
-            field=models.CharField(choices=[('Bardzo łatwy', 'Very Easy'), ('Łatwy', 'Easy'), ('Średni', 'Normal'), ('Trudny', 'Difficult'), ('Bardzo trudny', 'Very Difficult')], default='Średni', max_length=20),
+            field=models.CharField(choices=[('Bardzo łatwy', 'Very Easy'), ('Łatwy', 'Easy'), ('Średni', 'Normal'),
+                                            ('Trudny', 'Difficult'), ('Bardzo trudny', 'Very Difficult')],
+                                   default='Średni', max_length=20),
         ),
     ]

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('popcorn', '0002_DifficultyEnum'),
     ]
@@ -13,6 +12,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='recipe',
             name='difficulty',
-            field=models.IntegerField(choices=[(1, 'Very Easy'), (2, 'Easy'), (3, 'Normal'), (4, 'Difficult'), (5, 'Very Difficult')], default=3),
+            field=models.IntegerField(
+                choices=[(1, 'Very Easy'), (2, 'Easy'), (3, 'Normal'), (4, 'Difficult'), (5, 'Very Difficult')],
+                default=3),
         ),
     ]

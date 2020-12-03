@@ -1,13 +1,12 @@
-from django.db import models
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 from django.utils.text import slugify
 
-from django.utils import timezone
 
-#TODO: Add validators in different areas (images), but research them first
-#TODO: Research https://django-simple-history.readthedocs.io for approval history
+# TODO: Add validators in different areas (images), but research them first
+# TODO: Research https://django-simple-history.readthedocs.io for approval history
 
 class User(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
@@ -15,17 +14,20 @@ class User(models.Model):
     blocked_on = models.DateTimeField()
     blocked_till = models.DateTimeField()
     blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users')
-    deleted_on =  models.DateTimeField()
+    deleted_on = models.DateTimeField()
     deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users')
-    #MAYBE: avatar
+    # MAYBE: avatar
+
 
 class Moderator(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
     granted_on = models.DateTimeField(auto_now_add=True)
 
+
 class Category(models.Model):
     name = models.CharField(max_length=120)
     image = models.ImageField()
+
 
 class Vote(models.Model):
     object_id = models.PositiveIntegerField()
@@ -34,6 +36,7 @@ class Vote(models.Model):
     voted_on = models.DateTimeField(auto_now_add=True)
     vote_target = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     target_id = GenericForeignKey('vote_target')
+
 
 class Recipe(models.Model):
     class Difficulty(models.IntegerChoices):
@@ -60,7 +63,8 @@ class Recipe(models.Model):
     deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes')
     comments = GenericRelation('Comment')
     votes = GenericRelation('Vote')
-    #TODO: When WYSIWYG is picked add images
+
+    # TODO: When WYSIWYG is picked add images
 
     def is_hidden(self):
         return self.hidden_on is not None
@@ -94,8 +98,9 @@ class Measurment(models.Model):
     full_name = models.CharField(max_length=120)
     short_name = models.CharField(max_length=6)
 
+
 class Ingredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete = models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     count = models.PositiveIntegerField()
     measurment = models.ForeignKey(Measurment, on_delete=models.SET_NULL, null=True)
