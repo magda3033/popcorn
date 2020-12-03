@@ -2,18 +2,22 @@
 {% load i18n %}
 {% block title %}Rejestracja{% endblock %}
 {% block content %}
-<table>
-    <div class="container top-buffer-big">
+    <table>
+        <div class="container top-buffer-big">
             <div class="col py-2">
                 <h2 class="top-buffer naglowek cstm-shadow">Rejestracja</h2>
 
-        <form method='post' action=''>{% csrf_token %}
+                <form method='post' action=''>{% csrf_token %}
 
-            <input class="form-control top-buffer inputBox cstm-shadow" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required="" id="id_username" placeholder="Nazwa użytkownika">
-            <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
-            <input class="form-control top-buffer inputBox cstm-shadow" type="email" name="email" maxlength="254" required="" id="id_email" placeholder="Adres Email">
-            <input class="form-control top-buffer inputBox cstm-shadow" type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="Hasło">
-            <span class="helptext">
+                    <input class="form-control top-buffer inputBox cstm-shadow" type="text" name="username"
+                           maxlength="150" autocapitalize="none" autocomplete="username" autofocus="" required=""
+                           id="id_username" placeholder="Nazwa użytkownika">
+                    <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                    <input class="form-control top-buffer inputBox cstm-shadow" type="email" name="email"
+                           maxlength="254" required="" id="id_email" placeholder="Adres Email">
+                    <input class="form-control top-buffer inputBox cstm-shadow" type="password" name="password1"
+                           autocomplete="new-password" required="" id="id_password1" placeholder="Hasło">
+                    <span class="helptext">
                 <ul>
                     <li>Your password can’t be too similar to your other personal information.</li>
                     <li>Your password must contain at least 8 characters.</li>
@@ -21,15 +25,16 @@
                     <li>Your password can’t be entirely numeric.</li>
                 </ul>
             </span>
-            <input class="form-control top-buffer inputBox cstm-shadow" type="password" name="password2" autocomplete="new-password" required="" id="id_password2"><br><span class="helptext">Potwierdź hasło</span>
-            <input class="btn classic-btn cstm-shadow btn-lg btn-block" type="submit" value="Zarejestruj się">
-        </form>
-                </div>
-        {% load static %}
-        <div class="col py-2 d-flex flex-column">
-            <img src="{% static 'popcorn/images/logo.png' %}" class="img-fluid" alt="Responsive image">
+                    <input class="form-control top-buffer inputBox cstm-shadow" type="password" name="password2"
+                           autocomplete="new-password" required="" id="id_password2"><br><span class="helptext">Potwierdź hasło</span>
+                    <input class="btn classic-btn cstm-shadow btn-lg btn-block" type="submit" value="Zarejestruj się">
+                </form>
+            </div>
+            {% load static %}
+            <div class="col py-2 d-flex flex-column">
+                <img src="{% static 'popcorn/images/logo.png' %}" class="img-fluid" alt="Responsive image">
+            </div>
         </div>
-    </div>
 
-</table>
+    </table>
 {% endblock %}

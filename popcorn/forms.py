@@ -49,7 +49,6 @@ class RecipeForm(forms.ModelForm):
             'content': '',
         }
 
-
 # class CategoryForm(forms.ModelForm):
 #     class Meta:
 #         model = Category

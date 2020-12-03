@@ -1,52 +1,64 @@
 .top-buffer {
-  margin-top: 20px;
+    margin-top: 20px;
 }
+
 .naglowek {
-  background-color: #ffba47;
-  border-color: #707070;
-  padding: 10px;
-  text-align: center;
-  color: #ffffff;
-  text-shadow: 0px 3px 3px #a95232;
+    background-color: #ffba47;
+    border-color: #707070;
+    padding: 10px;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0px 3px 3px #a95232;
 }
+
 .inputBox {
-  background-color: #fffce6;
+    background-color: #fffce6;
 }
+
 .classic-btn {
-  background-color: #fffce6;
-  border-style: none;
+    background-color: #fffce6;
+    border-style: none;
 }
+
 .classic-btn:hover {
-  background-color: #ffba47;
+    background-color: #ffba47;
 }
+
 .classic-btn:active {
-  background-color: #c84141;
-  color: #ffffff;
+    background-color: #c84141;
+    color: #ffffff;
 }
+
 .cstm-shadow {
-  -webkit-filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.3411764705882353));
-  filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.3411764705882353));
+    -webkit-filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.3411764705882353));
+    filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.3411764705882353));
 }
+
 .bg {
-  background-image: url("../images/bg.png");
-  background-repeat: repeat-y;
-  background-size: contain;
+    background-image: url("../images/bg.png");
+    background-repeat: repeat-y;
+    background-size: contain;
 }
+
 .navbar-cstm {
-  background-color: #ffba47;
+    background-color: #ffba47;
 }
+
 .top-buffer-big {
-  margin-top: 180px;
-  margin-bottom: 180px;
+    margin-top: 180px;
+    margin-bottom: 180px;
 }
+
 .radio-btn {
-  background-color: #ffba47;
-  border-style: none;
+    background-color: #ffba47;
+    border-style: none;
 }
+
 .radio-btn:active {
-  background-color: #c84141;
-  color: #ffffff;
+    background-color: #c84141;
+    color: #ffffff;
 }
+
 .margin-big {
-  margin: 200px;
+    margin: 200px;
 }
