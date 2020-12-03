@@ -13,6 +13,11 @@
                 <!--TODO: Add ingredients -->
                 <!--TODO: Add categories -->
                 <!--TODO: Add voting-->
+{#                {{% for a in recipe.votes %}}#}
+{#                    a#}
+{#                {{% endfor %}}#}
+                {{ recipe.votes.value }}
+                <h4 class="text-center"></h4>
                 <!--TODO: Add food icon-->
                 {{ recipe.content|safe }}
 
