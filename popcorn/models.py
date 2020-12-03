@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User as AuthUser
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.utils.text import slugify
 
 from django.utils import timezone
 
@@ -35,6 +36,13 @@ class Vote(models.Model):
     target_id = GenericForeignKey('vote_target')
 
 class Recipe(models.Model):
+    class Difficulty(models.IntegerChoices):
+        VERY_EASY = 1, ('Bardzo łatwa')
+        EASY = 2, ('Łatwa')
+        NORMAL = 3, ('Średnia')
+        DIFFICULT = 4, ('Trudna')
+        VERY_DIFFICULT = 5, ('Bardzo trudna')
+
     slug = models.SlugField()
     name = models.CharField(max_length=120)
     content = models.TextField()
@@ -45,10 +53,10 @@ class Recipe(models.Model):
     last_modified = models.DateTimeField(auto_now=True)
     preparation_time = models.PositiveIntegerField()
     servings_count = models.PositiveIntegerField()
-    difficulty = models.PositiveIntegerField()
-    hidden_on = models.DateTimeField()
+    difficulty = models.IntegerField(choices=Difficulty.choices, default=Difficulty.NORMAL)
+    hidden_on = models.DateTimeField(null=True)
     hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes')
-    deleted_on = models.DateTimeField()
+    deleted_on = models.DateTimeField(null=True)
     deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes')
     comments = GenericRelation('Comment')
     votes = GenericRelation('Vote')
@@ -59,6 +67,11 @@ class Recipe(models.Model):
 
     def is_deleted(self):
         return self.deleted_on is not None
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name, allow_unicode=True)
+        super().save(*args, **kwargs)
+
 
 class Comment(models.Model):
     object_id = models.PositiveIntegerField()
