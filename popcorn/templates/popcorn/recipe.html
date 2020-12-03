@@ -1,0 +1,23 @@
+{% extends "popcorn/base.html" %}
+{% block title %}{{ recipe.name }}{% endblock %}
+
+{% block content %}
+    <div class="card margin-big ">
+        <div class="card-body">
+            <div class="col">
+                <h2 class="card-title text-center">{{ recipe.name }}</h2>
+                <h4 class="text-center">Autor: {{ recipe.author }}</h4>
+                <h4 class="text-center">Czas wykonania: {{ recipe.preparation_time }}</h4>
+                <h4 class="text-center">Ilość porcji: {{ recipe.servings_count }}</h4>
+                <h4 class="text-center">Trudność wykonania: {{ recipe.difficulty }}</h4>
+                <!--TODO: Add ingredients -->
+                <!--TODO: Add categories -->
+                <!--TODO: Add voting-->
+                <!--TODO: Add food icon-->
+                {{ recipe.content|safe }}
+
+                <!--TODO: Add comments-->
+            </div>
+        </div>
+    </div>
+{% endblock %}
