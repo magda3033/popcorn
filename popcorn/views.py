@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-
+from django.contrib.auth import logout
 from .forms import RecipeForm  # , CategoryForm
 from .models import Recipe
 
@@ -18,7 +18,7 @@ def recipe(request):
 
 
 def recipes(request):
-    return render(request, 'popcorn/recipes.html', {'recipes':  Recipe.objects.all()})
+    return render(request, 'popcorn/recipes.html', {'recipes': Recipe.objects.all()})
 
 
 class RecipeView(generic.DetailView):
@@ -37,6 +37,11 @@ def edit_recipe(request):
     else:
         form = RecipeForm()
     return render(request, 'popcorn/recipe_edit.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'popcorn/logout_success.html')
 
 # def add_category(request):
 #     lastimage= Category.objects.last()

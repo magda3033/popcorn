@@ -26,4 +26,5 @@ urlpatterns = [
     path('recipes/', views.recipes, name='recipes'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('logout/', views.logout_view, name='logout'),
 ]
