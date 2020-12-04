@@ -23,7 +23,6 @@ urlpatterns = [
     path('recipes/add/', views.edit_recipe, name='add_recipe'),
     path('recipes/edit/<str:slug>', views.edit_recipe, name='edit_recipe'),
     path('recipes/view/<str:slug>', views.RecipeView.as_view(), name='recipe'),
-    path('recipes/', views.recipes, name='recipes'),
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', views.logout_view, name='logout'),
