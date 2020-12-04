@@ -2,11 +2,5 @@
 {% block title %}Przepisy{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for r in recipes %}
-            <li>
-                <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+
 {% endblock %}

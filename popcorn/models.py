@@ -46,6 +46,7 @@ class Recipe(models.Model):
         DIFFICULT = 4, ('Trudna')
         VERY_DIFFICULT = 5, ('Bardzo trudna')
 
+    id = models.AutoField(primary_key=True)
     slug = models.SlugField()
     name = models.CharField(max_length=120)
     content = models.TextField()
@@ -61,8 +62,10 @@ class Recipe(models.Model):
     hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes')
     deleted_on = models.DateTimeField(null=True)
     deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes')
-    comments = GenericRelation('Comment')
-    votes = GenericRelation('Vote')
+
+    # TODO: Fix relations
+    # comments = GenericRelation('Comment')
+    # votes = GenericRelation('Vote')
 
     # TODO: When WYSIWYG is picked add images
 
@@ -73,7 +76,8 @@ class Recipe(models.Model):
         return self.deleted_on is not None
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name, allow_unicode=False)
+        super().save(*args, **kwargs)
+        self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
 
 
