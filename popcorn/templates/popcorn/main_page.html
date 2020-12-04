@@ -2,10 +2,18 @@
 {% block title %}Strona główna{% endblock %}
 
 {% block content %}
-     <ul>
+    <ul>
         {% for r in recipes %}
             <li>
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
+{#                Opis#}
+                <a>{{ r.content|safe }} </a>
+{#                Czas przygotowania#}
+                <a>{{r.preparation_time}}</a>
+{#                Ilosc porcji#}
+                <a>{{r.servings_count}}</a>
+{#                Trudnosc#}
+                <a>{{r.difficulty}}</a>
             </li>
         {% endfor %}
     </ul>
