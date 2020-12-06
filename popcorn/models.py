@@ -63,7 +63,7 @@ class Recipe(models.Model):
     deleted_on = models.DateTimeField(null=True)
     deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes')
 
-    # TODO: Fix relations
+    # TODO: Fix relations in recipe
     # comments = GenericRelation('Comment')
     # votes = GenericRelation('Vote')
 
@@ -91,6 +91,9 @@ class Comment(models.Model):
     deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='comments_deleted')
     comment_parent = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
     parent_id = GenericForeignKey('comment_parent')
+
+    # TODO: Fix relations in comment
+
     comments = GenericRelation('Comment')
     votes = GenericRelation('Vote')
 
