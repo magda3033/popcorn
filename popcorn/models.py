@@ -10,12 +10,14 @@ from django.utils.text import slugify
 
 class User(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-    newsletter_signup = models.BinaryField()
-    blocked_on = models.DateTimeField()
-    blocked_till = models.DateTimeField()
-    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users')
-    deleted_on = models.DateTimeField()
-    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users')
+    newsletter_signup = models.BinaryField(blank=True, null=True)
+    blocked_on = models.DateTimeField(blank=True, null=True)
+    blocked_till = models.DateTimeField(blank=True, null=True)
+    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users',
+                                   blank=True)
+    deleted_on = models.DateTimeField(blank=True, null=True)
+    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
+                                   blank=True)
     # MAYBE: avatar
 
 
@@ -50,18 +52,20 @@ class Recipe(models.Model):
     slug = models.SlugField()
     name = models.CharField(max_length=120)
     content = models.TextField()
-    icon = models.ImageField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_recipes')
-    categories = models.ManyToManyField(Category)
-    created_on = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
+    icon = models.ImageField(blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_recipes',blank=True)
+    categories = models.ManyToManyField(Category, blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    last_modified = models.DateTimeField(auto_now=True, blank=True, null=True)
     preparation_time = models.PositiveIntegerField()
     servings_count = models.PositiveIntegerField()
     difficulty = models.IntegerField(choices=Difficulty.choices, default=Difficulty.NORMAL)
-    hidden_on = models.DateTimeField(null=True)
-    hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes')
-    deleted_on = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes')
+    hidden_on = models.DateTimeField(null=True, blank=True)
+    hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes',
+                                  blank=True)
+    deleted_on = models.DateTimeField(null=True, blank=True)
+    deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes',
+                                   blank=True)
 
     # TODO: Fix relations in recipe
     # comments = GenericRelation('Comment')
