@@ -1,6 +1,7 @@
 from django.contrib.auth import logout
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
+from django.conf import settings
 
 from .forms import RecipeForm  # , CategoryForm
 from .models import Recipe
@@ -24,6 +25,10 @@ class RecipeView(generic.DetailView):
 
 
 def edit_recipe(request):
+    if not request.user.is_authenticated:
+        #Todo add nice page to say that you are not authorized 
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
     if request.method == 'POST':
         form = RecipeForm(request.POST)
 
