@@ -22,13 +22,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto h5  align-items-center">
             <li class="nav-item px-2">
-                <a class="nav-link" href="{% url 'add_recipe' %}">Dodaj Przepis</a>
-            </li>
-            <li class="nav-item px-2">
                 <a class="nav-link" href="">Kategorie</a>
             </li>
 
             {% if user.is_authenticated %}
+                <li class="nav-item px-2">
+                    <a class="nav-link" href="{% url 'add_recipe' %}">Dodaj Przepis</a>
+                </li>
                 <li class="nav-item px-2">
                     <a class="nav-link">Zalogowano jako {{ user.username }}</a>
                 </li>

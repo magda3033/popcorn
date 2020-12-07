@@ -11,12 +11,14 @@ from vote.models import VoteModel
 
 class User(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-    newsletter_signup = models.BinaryField()
-    blocked_on = models.DateTimeField()
-    blocked_till = models.DateTimeField()
-    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users')
-    deleted_on = models.DateTimeField()
-    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users')
+    newsletter_signup = models.BinaryField(blank=True, null=True)
+    blocked_on = models.DateTimeField(blank=True, null=True)
+    blocked_till = models.DateTimeField(blank=True, null=True)
+    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users',
+                                   blank=True)
+    deleted_on = models.DateTimeField(blank=True, null=True)
+    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
+                                   blank=True)
     # MAYBE: avatar
 
 
