@@ -93,9 +93,8 @@ class Comment(models.Model):
     parent_id = GenericForeignKey('comment_parent')
 
     # TODO: Fix relations in comment
-
-    comments = GenericRelation('Comment')
-    votes = GenericRelation('Vote')
+    # comments = GenericRelation('Comment')
+    # votes = GenericRelation('Vote')
 
     def is_deleted(self):
         return self.deleted_on is not None
