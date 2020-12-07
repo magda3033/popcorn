@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'popcorn.apps.PopcornConfig',
     'django_extensions',
-    'django_summernote'
+    'django_summernote',
+    'vote',
 ]
 
 MIDDLEWARE = [
