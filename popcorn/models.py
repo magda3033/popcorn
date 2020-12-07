@@ -81,6 +81,7 @@ class Recipe(VoteModel, models.Model):
         return self.deleted_on is not None
 
     def save(self, *args, **kwargs):
+        self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
         self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
