@@ -1,0 +1,307 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lachaise Assignment
+% LaTeX Template
+% Version 1.0 (26/6/2018)
+%
+% This template originates from:
+% http://www.LaTeXTemplates.com
+%
+% Authors:
+% Marion Lachaise & François Févotte
+% Vel (vel@LaTeXTemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass{article}
+
+\input{structure.tex} % Include the file specifying the document structure and custom commands
+
+%----------------------------------------------------------------------------------------
+%	ASSIGNMENT INFORMATION
+%----------------------------------------------------------------------------------------
+
+
+
+\title{POPCORN} % Title of the assignment
+
+\author{Grupa 321} % Author name and email address
+
+\date{West Pomeranian University of Technology --- \today} % University, school and/or department name(s) and a date
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title
+
+
+\tableofcontents
+\newpage
+
+\section{Wymagania Użytkowe}
+
+    \subsection{Ogólne Wymagania}
+    
+        \begin{enumerate}[I.]
+            \item Powiadomienie o Cookiesach
+        \end{enumerate}
+    
+    \subsection{Konto Użytkownika}
+    
+        \begin{enumerate}[I.]
+            \item Możliwość stworzenia konta
+            \item Stworzenie konta musi zostać uwierzytelnione za pomocą captchy + potwierdzeniem adresu mailowego
+            \item Możliwość zalogowania się
+            \item Możliwość zmiany hasła
+            \item Możliwość zmiany maila
+            \item Informacja jak długo konto jest aktywne
+            \item Opis konta użytkownika (płeć, wiek)
+            \item Rozdzielenie nazwy wyświetlanej i nazwy konta (opcjonalnie? Username vs display name)
+            \item Licznik głosów za przepisy i komentarze (opcjonalnie)
+            \item Możliwość przeglądania wszystkich swoich przepisów (opcjonalnie)
+            \item Możliwość przeglądania wszystkich swoich komentarzy (opcjonalnie)
+        \end{enumerate}
+        
+    \subsection{Przepisy}
+    
+        \begin{enumerate}[I.]
+        
+            \item Przegladanie przepisu wraz z komentarzami
+            \item Dodawanie przepisu
+            
+            \begin{enumerate}[a.]
+                \item Dodawanie składników
+                \item Dodawanie tekstu (WYSIWYG)
+                \item Dodawanie zdjęcia miniaturki
+                \item Dodawanie zdjęć do artykułu (limitowane do 3 albo za pomocą WYSIWYG) lub dodanie mini galerii
+                \item Wybranie kategorii (do jakiej kategorii należy)
+                \item Wybranie rodzaju dania (wegańskie, wegetariańskie, normalne)
+                \item Czas wykonania
+                \item Poziom trudności
+                \item Wielkość porcji (na ile osób)
+                \item Rodzaj (obiad/kolacja/śniadanie/cały dzień)
+                \item Przepis zapisuje się w trakcie i można do niego wrócić (opcjonalnie)
+                \item Trzeba wpisać captchę przy ostatecznym opublikowaniu (opcjonalnie)
+            \end{enumerate}
+            
+            \item Edycja przepisu - Możliwość edycji przepisu (opcjonalnie - 24 godziny bez ograniczeń dla użytkownika, po 24 godzinach wymaga zgody opiekuna (tj. Użytkownik robi zmianę, opiekun ją sprawdza i może zatwierdzić))
+            \item Funkcja komentarzy
+            
+            \begin{enumerate}[a.]
+                \item Dodawanie komentarzy do przepisu
+                \item Dodawanie komentarzy do komentarzy (a’la Reddit) (opcjonalnie)
+                \item Edycja komentarzy - możliwość edycji komentarzy (opcjonalnie, dodanie oznaczenia, że komentarz był edytowany, jeżeli został on zmieniony później, niż 10 minut po edycji). Brak możliwości edycji komentarzy po 7 dniach.
+                \item Usuwanie komentarzy (przez Opiekuna)
+            \end{enumerate}
+            
+            \item Funkcja głosowania
+            
+             \begin{enumerate}[a.]
+                \item Każdy użytkownik ma jeden głos na jeden post/komentarz
+                \item Głos może być na plus/minus (ziarenko/popcorn?)
+                \item Głos można zmienić/cofnąć
+            \end{enumerate}
+            
+        \end{enumerate}
+        
+    \subsection{Podstrona przepisów z danej kategorii}
+    
+        \begin{enumerate}[I.]
+        
+            \item Filtrowanie kategorii
+            
+                \begin{enumerate}[a.]
+                    \item Wegetariańskie/Wegańskie/Mięsne
+                    \item Długość Przygotowania
+                \end{enumerate}
+                
+            \item Sortowanie kategorii
+            
+                 \begin{enumerate}[a.]
+                    \item Najlepiej Oceniane
+                    \item Nowe Przepisy
+                \end{enumerate}
+                
+        \end{enumerate}
+        
+    \subsection{Podstrona z kategoriami}
+    
+        \begin{enumerate}[I.]
+            \item Lista kategorii z reprezentacyjnym obrazkiem + nazwą
+        \end{enumerate}
+        
+    \subsection{Strona główna}
+    
+        \begin{enumerate}[I.]
+            \item Możliwość wyszukania przepisu (opcjonalne???)
+            \item Wyświetlanie najlepszych przepisów dnia/tygodnia (ilość głosów)
+            \item Wyświetlanie polecanych przepisów dla użytkownika
+            \item Zapisanie się do newslettera (nawet bez posiadania konta)
+        \end{enumerate}
+    
+    \subsection{Newsletter z najlepszymi przepisami z danego tygodnia (opcjonalnie)}
+    
+        \begin{enumerate}[I.]
+            \item Wybór pożądanych kategorii (tj. Możliwość nakładania filtrów na newsletter)
+        \end{enumerate}
+    
+    \subsection{Konto opiekuna (a’la moderator)}
+    
+        \begin{enumerate}[I.]
+            \item Może ukrywać przepisy (z powiadomieniem do użytkownika) 
+            \item Może usuwać przepisy
+            \item Może usuwać komentarze
+            \item Może zablokować konto użytkownika czasowo.
+            \item Może usuwać konto użytkownika. 
+        \end{enumerate}
+    \subsection{Kategorie mogą posiadać podkategorie (opcjonalnie)}
+    \subsection{Czat prywatny (opcjonalne)}
+    
+\clearpage
+\section{Projekt Wyglądu}
+
+    \subsection{Logo - Stylizowany napis popcorn z ziarenkami popcornu zamiast o (albo z kubełkami)}
+    \subsection{Wygląd strony}
+
+    \begin{enumerate}
+    
+        \item Strona Główna\\
+        Możliwe przejścia do okien:
+        
+        
+        
+        \begin{figure}[h]
+            \begin{subfigure}{0.3\textwidth}
+                \begin{enumerate}
+                    \item Strona Główna
+                    \item Przepisy
+                    \item Kategorie
+                    \item Logowanie
+                    \item Przepis
+                    \item Konto
+                \end{enumerate}
+            \end{subfigure}
+            \begin{subfigure}{0.7\textwidth}
+                \includegraphics[height=0.9\linewidth]{Images/stronaglowna.png} 
+            \end{subfigure}
+        \end{figure}
+        
+        
+        \item Przepisy\\
+         Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Przepis
+            \item Konto
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/przepisy.png}
+        
+        \item Kategorie\\
+        Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Przepis
+            \item Konto
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/kateg.png}
+        
+        \item Logowanie\\
+        Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Rejestracja
+            \item Konto
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/logowanie.png}
+        
+        \item Rejestracja\\
+        Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Konto
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/rejestracja.png}
+        
+        \item Przepis(?)\\
+         Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Konto
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/przepis.png}
+        
+        \item Dodanie Przepisu\\\\
+        Wybranie kategorii:\\
+        Jedzeniowych (zupy, ciasta, główne bla bla bla), wiele i minimum jedno obowiązkowe
+        Czasu  wykonania (<30 minut, 30-60 minut, 60> minut) jedno, ale obowiązkowe
+        Rodzaju (śniadanie, obiad, kolacja itd) jedno, ale obowiązkowe
+        Poziomu trudności od 1 do 5 (tamto słowne Bardzo Łatwy...Bardzo trudny było spoko, można śmiało sklonować)\\\\
+        Dodawanie zdjęcia miniaturki:\\
+        Dodawanie składników (nazwa, ilość, jednostka jako dropdown, lista będzie przesyłana ale do testów możesz dodać jakieś 3 jednostki)
+        Dodawanie zdjęć do artykułu (limitowane do 3 albo za pomocą WYSIWYG) lub dodanie mini galerii (tu jeszcze nie testowałem, więc możesz to zignorować)
+        Dodawanie tekstu (WYSIWYG) (to moja broszka, ale musi być miejsce wyznaczone, na razie możesz śmiało jako text-field zrobić)\\
+ 
+        Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Konto
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/dodprzep.png}
+        
+        \item Newsletter\\
+        Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Przepis
+            \item Konto
+        \end{enumerate}
+        
+        \item Konto\\
+        Możliwe przejścia do okien:
+        \begin{enumerate}
+            \item Strona Główna
+            \item Przepisy
+            \item Kategorie
+            \item Logowanie
+            \item Przepis
+            \item Dodaj Przepis
+        \end{enumerate}
+        \includegraphics[width=0.3\textwidth]{Images/konto.png}
+    \end{enumerate}
+    
+    \newpage
+    \section{Dokumentacja Techniczna}
+        \subsection{Diagram przypadków użycia - logowanie i rejestracja}
+        
+        \includegraphics[width=1\textwidth]{Images/diag.png}
+        \subsection{Diagram UML bazy danych}
+        
+        \includegraphics[width=1\textwidth]{Images/graphviz.png}
+\end{document}
