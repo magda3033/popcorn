@@ -3,10 +3,21 @@ from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKe
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.text import slugify
-
+from django.core.exceptions import ValidationError
 
 # TODO: Add validators in different areas (images), but research them first
 # TODO: Research https://django-simple-history.readthedocs.io for approval history
+# TODO: Add convertion of images uploaded by users that are not jpeg's to jpeg's
+
+def validate_recipe_icon(image):
+    file_size = image.file.size
+    limit_mb = 20
+    max_width = 1000
+    max_height = 800
+    if image.file.image.width > max_width or image.file.image.height > max_height:
+        raise ValidationError("Max size of file is {} by {}".format(max_width, max_height))
+    if file_size > 1024 * 1024 * limit_mb:
+        raise ValidationError("Max size of file is {} MB".format(limit_mb))
 
 class User(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
@@ -26,7 +37,7 @@ class Moderator(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=120)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='categories/')
 
 
 class Vote(models.Model):
@@ -50,7 +61,7 @@ class Recipe(models.Model):
     slug = models.SlugField()
     name = models.CharField(max_length=120)
     content = models.TextField()
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to='recipes_icons', validators=[validate_recipe_icon])
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_recipes')
     categories = models.ManyToManyField(Category)
     created_on = models.DateTimeField(auto_now_add=True)
