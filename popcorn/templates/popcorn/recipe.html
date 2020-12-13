@@ -6,18 +6,25 @@
         <div class="card-body">
             <div class="col">
                 <h2 class="card-title text-center">{{ recipe.name }}</h2>
-                <h4 class="text-center">Autor: {{ recipe.author }}</h4>
-                <h4 class="text-center">Czas wykonania: {{ recipe.preparation_time }}</h4>
+                {% if recipe.author.auth_user %}
+                    <h4 class="text-center">Autor: {{ recipe.author.auth_user }}</h4>
+                {% else %}
+                    <h4 class="text-center">Autor: Brak</h4>
+                {% endif %}
+                <h4 class="text-center">Czas wykonania: {{ recipe.preparation_time }} min</h4>
                 <h4 class="text-center">Ilość porcji: {{ recipe.servings_count }}</h4>
                 <h4 class="text-center">Trudność wykonania: {{ recipe.difficulty }}</h4>
                 <!--TODO: Add scaling-->
-                {% if athlete_list %}
+                {% if recipe.icon.url %}
                     <img src="{{ recipe.icon.url }}">
                 {% endif %}
 
                 <!--TODO: Add ingredients -->
                 <!--TODO: Add categories -->
                 <!--TODO: Add voting-->
+                <a class="nav-link" href="{% url 'voteup' recipe.slug %}">Like</a>
+                <a class="nav-link" href="{% url 'votedown' recipe.slug %}">Unlike</a>
+                <h4 class="text-center">Głosy: {{ recipe.vote_score }}</h4>
                 <h4 class="text-center"></h4>
                 <!--TODO: Add food icon-->
                 {{ recipe.content|safe }}

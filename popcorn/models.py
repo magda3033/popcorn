@@ -4,6 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
+from vote.models import VoteModel
 
 # TODO: Add validators in different areas (images), but research them first
 # TODO: Research https://django-simple-history.readthedocs.io for approval history
@@ -21,12 +22,14 @@ def validate_recipe_icon(image):
 
 class User(models.Model):
     auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-    newsletter_signup = models.BinaryField()
-    blocked_on = models.DateTimeField()
-    blocked_till = models.DateTimeField()
-    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users')
-    deleted_on = models.DateTimeField()
-    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users')
+    newsletter_signup = models.BinaryField(blank=True, null=True)
+    blocked_on = models.DateTimeField(blank=True, null=True)
+    blocked_till = models.DateTimeField(blank=True, null=True)
+    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users',
+                                   blank=True)
+    deleted_on = models.DateTimeField(blank=True, null=True)
+    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
+                                   blank=True)
     # MAYBE: avatar
 
 
@@ -40,16 +43,16 @@ class Category(models.Model):
     image = models.ImageField(upload_to='categories/')
 
 
-class Vote(models.Model):
-    object_id = models.PositiveIntegerField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    value = models.BinaryField()
-    voted_on = models.DateTimeField(auto_now_add=True)
-    vote_target = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    target_id = GenericForeignKey('vote_target')
+# class Vote(models.Model):
+#     object_id = models.PositiveIntegerField()
+#     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+#     value = models.BinaryField()
+#     voted_on = models.DateTimeField(auto_now_add=True)
+#     vote_target = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+#     target_id = GenericForeignKey('vote_target')
 
 
-class Recipe(models.Model):
+class Recipe(VoteModel, models.Model):
     class Difficulty(models.IntegerChoices):
         VERY_EASY = 1, ('Bardzo łatwa')
         EASY = 2, ('Łatwa')
@@ -58,21 +61,23 @@ class Recipe(models.Model):
         VERY_DIFFICULT = 5, ('Bardzo trudna')
 
     id = models.AutoField(primary_key=True)
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True, null=True)
     name = models.CharField(max_length=120)
     content = models.TextField()
     icon = models.ImageField(upload_to='recipes_icons', validators=[validate_recipe_icon])
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_recipes')
-    categories = models.ManyToManyField(Category)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_recipes', blank=True)
+    categories = models.ManyToManyField(Category, blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     preparation_time = models.PositiveIntegerField()
     servings_count = models.PositiveIntegerField()
-    difficulty = models.IntegerField(choices=Difficulty.choices, default=Difficulty.NORMAL)
-    hidden_on = models.DateTimeField(null=True)
-    hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes')
-    deleted_on = models.DateTimeField(null=True)
-    deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes')
+    difficulty = models.IntegerField(choices=Difficulty.choices, default=Difficulty.NORMAL, blank=True, null=True)
+    hidden_on = models.DateTimeField(null=True, blank=True)
+    hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes',
+                                  blank=True)
+    deleted_on = models.DateTimeField(null=True, blank=True)
+    deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes',
+                                   blank=True)
 
     # TODO: Fix relations in recipe
     # comments = GenericRelation('Comment')
@@ -104,9 +109,8 @@ class Comment(models.Model):
     parent_id = GenericForeignKey('comment_parent')
 
     # TODO: Fix relations in comment
-
-    comments = GenericRelation('Comment')
-    votes = GenericRelation('Vote')
+    # comments = GenericRelation('Comment')
+    # votes = GenericRelation('Vote')
 
     def is_deleted(self):
         return self.deleted_on is not None
