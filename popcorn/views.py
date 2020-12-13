@@ -3,10 +3,8 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.conf import settings
 
-
 from .forms import RecipeForm  # , CategoryForm
 from .models import Recipe
-
 
 # Create your views here.
 # class IndexView(generic.DetailView):
@@ -31,7 +29,7 @@ def edit_recipe(request):
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        form = RecipeForm(request.POST, request.FILES)
 
         if form.is_valid():
             # add redirection
@@ -46,7 +44,6 @@ def logout_view(request):
     logout(request)
     return render(request, 'popcorn/logout_success.html')
 
-
 def vote_up(request, slug):
     review = Recipe.objects.get(slug=slug)
     user = request.user
@@ -59,20 +56,3 @@ def vote_down(request, slug):
     user = request.user
     review.votes.down(user.id)
     return render(request, 'popcorn/main_page.html')
-
-# def add_category(request):
-#     lastimage= Category.objects.last()
-
-#     imagefile= lastimage.imagefile if lastimage is not None else None
-
-
-#     form = CategoryForm(request.POST or None, request.FILES or None)
-#     if form.is_valid():
-#         form.save()
-
-
-#     context= {'imagefile': imagefile,
-#               'form': form
-#               }
-
-#     return render(request, 'popcorn/recipe_edit.html', {'form' : form})
