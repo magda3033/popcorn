@@ -6,8 +6,8 @@
         <div class="card-body">
             <div class="col">
                 <h2 class="card-title text-center">{{ recipe.name }}</h2>
-                {% if recipe.author.auth_user %}
-                    <h4 class="text-center">Autor: {{ recipe.author.auth_user }}</h4>
+                {% if recipe.author %}
+                    <h4 class="text-center">Autor: {{ recipe.author }}</h4>
                 {% else %}
                     <h4 class="text-center">Autor: Brak</h4>
                 {% endif %}
