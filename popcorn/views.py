@@ -61,6 +61,10 @@ def vote_down(request, slug):
 
 
 def post_comment(request, slug):
+    if not request.user.is_authenticated:
+        #Todo add nice page to say that you are not authorized 
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+
     template_name = 'popcorn/recipe.html'
     recipe = get_object_or_404(Recipe, slug=slug)
     #Todo add check for deleted comments
@@ -71,11 +75,12 @@ def post_comment(request, slug):
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
-
             # Create Comment object but don't save to database yet
             new_comment = comment_form.save(commit=False)
             # Assign the current post to the comment
             new_comment.recipe = recipe
+            if new_comment.author is None:
+                new_comment.author = request.user
             # Save the comment to the database
             new_comment.save()
     else:
