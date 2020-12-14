@@ -1,8 +1,8 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 
-from .models import Recipe, Category
-
+from .models import Recipe, User
+from django_registration.forms import RegistrationForm
 
 # Adding css to django class
 # https://stackoverflow.com/questions/5827590/css-styling-in-django-forms
@@ -49,8 +49,6 @@ class RecipeForm(forms.ModelForm):
             'content': '',
         }
 
-class CategoryForm(forms.ModelForm):
-    image = forms.ImageField()
-    class Meta:
-        model = Category
-        fields = ['name', 'image']
+class UserRegistrationForm(RegistrationForm):
+    class Meta(RegistrationForm.Meta):
+        model = User

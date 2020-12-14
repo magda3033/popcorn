@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User as AuthUser
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser
 from django.contrib.contenttypes.fields import GenericRelation, GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -20,23 +20,16 @@ def validate_recipe_icon(image):
     if file_size > 1024 * 1024 * limit_mb:
         raise ValidationError("Max size of file is {} MB".format(limit_mb))
 
-class User(models.Model):
-    auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
+class User(AbstractUser):
     newsletter_signup = models.BinaryField(blank=True, null=True)
     blocked_on = models.DateTimeField(blank=True, null=True)
     blocked_till = models.DateTimeField(blank=True, null=True)
-    blocked_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='blocked_users',
+    blocked_by = models.ForeignKey("User", on_delete=models.SET_NULL, null=True, related_name='blocked_users',
                                    blank=True)
     deleted_on = models.DateTimeField(blank=True, null=True)
-    deleted_by = models.ForeignKey("Moderator", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
+    deleted_by = models.ForeignKey("User", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
                                    blank=True)
     # MAYBE: avatar
-
-
-class Moderator(models.Model):
-    auth_user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
-    granted_on = models.DateTimeField(auto_now_add=True)
-
 
 class Category(models.Model):
     name = models.CharField(max_length=120)
@@ -73,10 +66,10 @@ class Recipe(VoteModel, models.Model):
     servings_count = models.PositiveIntegerField()
     difficulty = models.IntegerField(choices=Difficulty.choices, default=Difficulty.NORMAL, blank=True, null=True)
     hidden_on = models.DateTimeField(null=True, blank=True)
-    hidden_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes',
+    hidden_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='hidden_recipes',
                                   blank=True)
     deleted_on = models.DateTimeField(null=True, blank=True)
-    deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes',
+    deleted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes',
                                    blank=True)
 
     # TODO: Fix relations in recipe
@@ -104,7 +97,7 @@ class Comment(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     deleted_on = models.DateTimeField()
-    deleted_by = models.ForeignKey(Moderator, on_delete=models.SET_NULL, null=True, related_name='comments_deleted')
+    deleted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='comments_deleted')
     comment_parent = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
     parent_id = GenericForeignKey('comment_parent')
 

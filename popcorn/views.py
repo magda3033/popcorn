@@ -32,7 +32,9 @@ def edit_recipe(request):
         form = RecipeForm(request.POST, request.FILES)
 
         if form.is_valid():
-            # add redirection
+            if form.instance.author is None:
+                form.instance.author = request.user
+            # TODO: add redirection
             form.save()
             return render(request, 'popcorn/main_page.html')
     else:
