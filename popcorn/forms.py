@@ -2,6 +2,8 @@ from django import forms
 from django_summernote.widgets import SummernoteWidget
 
 from .models import Recipe
+from .models import Comment
+
 
 
 # Adding css to django class
@@ -53,3 +55,9 @@ class RecipeForm(forms.ModelForm):
 #     class Meta:
 #         model = Category
 #         fields = ['name', 'image']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {'content': ''}
