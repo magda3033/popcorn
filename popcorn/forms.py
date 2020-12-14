@@ -1,10 +1,8 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 
-from .models import Recipe
-from .models import Comment
-
-
+from .models import Recipe, User, Comment
+from django_registration.forms import RegistrationForm
 
 # Adding css to django class
 # https://stackoverflow.com/questions/5827590/css-styling-in-django-forms
@@ -29,7 +27,7 @@ class RecipeForm(forms.ModelForm):
             'preparation_time',
             'servings_count',
             # 'categories',
-            # 'icon',
+            'icon',
             'content',
         ]
         widgets = {
@@ -37,8 +35,8 @@ class RecipeForm(forms.ModelForm):
             'difficulty': forms.Select(attrs={'class': 'form-control'}),
             'preparation_time': forms.NumberInput(attrs={'class': 'form-control'}),
             'servings_count': forms.NumberInput(attrs={'class': 'form-control'}),
-            # 'servings_count': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'},choices=OPTIONS),
             # 'categories': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'},choices=OPTIONS),
+            # 'icon': forms.ImageField(),
             'content': SummernoteWidget(),
         }
         labels = {
@@ -47,17 +45,16 @@ class RecipeForm(forms.ModelForm):
             'preparation_time': 'Czas przygotowania (w minutach)',
             'servings_count': 'Ilość porcji',
             # 'categories': 'Kategorie',
-            # 'icon': 'Miniaturka',
+            'icon': 'Miniaturka',
             'content': '',
         }
-
-# class CategoryForm(forms.ModelForm):
-#     class Meta:
-#         model = Category
-#         fields = ['name', 'image']
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
         labels = {'content': ''}
+
+class UserRegistrationForm(RegistrationForm):
+    class Meta(RegistrationForm.Meta):
+        model = User
