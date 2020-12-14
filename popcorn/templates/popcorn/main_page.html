@@ -3,17 +3,36 @@
 
 {% block content %}
     <ul>
+        Top tygodnia
+        {% for r in lastweek%}
+            <li>
+                <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
+                {#                Opis#}
+                <a>{{ r.content|safe }} </a>
+                {#                Czas przygotowania#}
+                <a>{{ r.preparation_time }}</a>
+                {#                Ilosc porcji#}
+                <a>{{ r.servings_count }}</a>
+                {#                Trudnosc#}
+                <a>{{ r.difficulty }}</a>
+                <p>{{ r.created_on }}</p>
+                <p>{{ date. }}</p>
+                <a><img src="{{ r.icon.url }}"></a>
+            </li>
+        {% endfor %}
+
+        Nowe przepisy
         {% for r in recipes %}
             <li>
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
-{#                Opis#}
+                {#                Opis#}
                 <a>{{ r.content|safe }} </a>
-{#                Czas przygotowania#}
-                <a>{{r.preparation_time}}</a>
-{#                Ilosc porcji#}
-                <a>{{r.servings_count}}</a>
-{#                Trudnosc#}
-                <a>{{r.difficulty}}</a>
+                {#                Czas przygotowania#}
+                <a>{{ r.preparation_time }}</a>
+                {#                Ilosc porcji#}
+                <a>{{ r.servings_count }}</a>
+                {#                Trudnosc#}
+                <a>{{ r.difficulty }}</a>
             </li>
         {% endfor %}
     </ul>

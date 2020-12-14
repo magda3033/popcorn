@@ -1,5 +1,8 @@
+import datetime
+
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
+from django.utils import timezone
 from django.views import generic
 from django.conf import settings
 from django.shortcuts import get_object_or_404
@@ -7,12 +10,15 @@ from django.shortcuts import get_object_or_404
 from .forms import RecipeForm, CommentForm
 from .models import Recipe
 
+
 # Create your views here.
 # class IndexView(generic.DetailView):
 #     template_name = 'popcorn/main_page.html'
 
 def index(request):
-    return render(request, 'popcorn/main_page.html', {'recipes': Recipe.objects.all()})
+    return render(request, 'popcorn/main_page.html',
+                  {'recipes': Recipe.objects.all(),
+                   'lastweek': Recipe.objects.filter(created_on__gte=timezone.now() - datetime.timedelta(days=7))})
 
 
 def recipe(request, slug):
@@ -25,7 +31,7 @@ class RecipeView(generic.DetailView):
 
 def edit_recipe(request):
     if not request.user.is_authenticated:
-        #Todo add nice page to say that you are not authorized 
+        # Todo add nice page to say that you are not authorized
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
     if request.method == 'POST':
@@ -45,6 +51,7 @@ def edit_recipe(request):
 def logout_view(request):
     logout(request)
     return render(request, 'popcorn/logout_success.html')
+
 
 def vote_up(request, slug):
     review = Recipe.objects.get(slug=slug)
