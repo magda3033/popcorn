@@ -28,8 +28,32 @@
                 <h4 class="text-center"></h4>
                 <!--TODO: Add food icon-->
                 {{ recipe.content|safe }}
+                <br></br>
+
+                {% if user.is_authenticated %}
+                    <form method="post" style="margin-top: 1.3em;">
+                        {{ comment_form.as_p }}
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+                    </form>
+                {% else %}
+                    <p>Zaloguj się aby mieć możliwość dodawania komentarzy.</p>
+                {% endif %}
 
                 <!--TODO: Add comments-->
+                <ol>
+                    {% for c in comments %}
+                        {% if c.author %}
+                            <a>Autor: {{ c.author }} </a>
+                        {% else %}
+                            <a>Autor: [Skasowany] </a>
+                        {% endif %}
+                        <br>
+                        <a>{{ c.content|safe }} </a>
+                        <hr>
+                    {% endfor %}
+                </ol>
+                
             </div>
         </div>
     </div>

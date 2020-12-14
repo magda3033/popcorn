@@ -91,15 +91,16 @@ class Recipe(VoteModel, models.Model):
 
 
 class Comment(models.Model):
-    object_id = models.PositiveIntegerField()
+    #object_id = models.PositiveIntegerField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_comments')
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
-    deleted_on = models.DateTimeField()
+    deleted_on = models.DateTimeField(null=True)
     deleted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='comments_deleted')
-    comment_parent = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
-    parent_id = GenericForeignKey('comment_parent')
+    recipe = models.ForeignKey(Recipe, on_delete=models.SET_NULL, null=True, related_name='comments')
+    #comment_parent = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
+    #parent_id = GenericForeignKey('comment_parent')
 
     # TODO: Fix relations in comment
     # comments = GenericRelation('Comment')

@@ -1,7 +1,7 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget
 
-from .models import Recipe, User
+from .models import Recipe, User, Comment
 from django_registration.forms import RegistrationForm
 
 # Adding css to django class
@@ -48,6 +48,12 @@ class RecipeForm(forms.ModelForm):
             'icon': 'Miniaturka',
             'content': '',
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {'content': ''}
 
 class UserRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):

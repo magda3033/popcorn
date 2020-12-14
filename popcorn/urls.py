@@ -24,7 +24,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('recipes/add/', views.edit_recipe, name='add_recipe'),
     path('recipes/edit/<str:slug>', views.edit_recipe, name='edit_recipe'),
-    path('recipes/view/<str:slug>', views.RecipeView.as_view(), name='recipe'),
+    path('recipes/view/<str:slug>', views.post_comment, name='recipe'),
     path('recipes/view/<str:slug>/up', views.vote_up, name='voteup'),
     path('recipes/view/<str:slug>/down', views.vote_down, name='votedown'),
     path('accounts/profile/', views.index),
