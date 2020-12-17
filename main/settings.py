@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 ACCOUNT_ACTIVATION_DAYS = 7
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_VERIFICATION = "none"
+AUTH_USER_MODEL = 'popcorn.User'
 
 # Application definition
 
