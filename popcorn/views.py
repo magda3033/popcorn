@@ -24,6 +24,7 @@ class RecipeView(generic.DetailView):
 
 
 def edit_recipe(request):
+    #TODO: Automatically attach time category
     if not request.user.is_authenticated:
         #Todo add nice page to say that you are not authorized 
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))

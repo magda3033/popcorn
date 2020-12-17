@@ -32,8 +32,15 @@ class User(AbstractUser):
     # MAYBE: avatar
 
 class Category(models.Model):
+    class Tag(models.IntegerChoices):
+        PREPARATION_TIME = 1, ('Czasowa') #less than 30 minutes, 30-120 etc.
+        MEAL_TIME = 2, ('Pora') #breakfast, dinner etc.
+        CUISINE_TYPE = 3, ('Rodzaj') #vegan, normal, vegetarian etc.
+        CATEGORY = 4, ('Kategoria') #all other
+
     name = models.CharField(max_length=120)
     image = models.ImageField(upload_to='categories/')
+    tag = models.IntegerField(choices=Tag.choices, default=Tag.CATEGORY)
 
 
 # class Vote(models.Model):
