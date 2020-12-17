@@ -4,35 +4,48 @@
 {% block content %}
     <ul>
         Top tygodnia
-        {% for r in lastweek%}
+        {% for r in lastweek %}
+
             <li>
+                {% if forloop.first %}
+                    pierwszy
+                {% endif %}
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
                 {#                Opis#}
-                <a>{{ r.content|safe }} </a>
+                <p>{{ r.content|safe }} </p>
                 {#                Czas przygotowania#}
-                <a>{{ r.preparation_time }}</a>
+                <p>{{ r.preparation_time }}</p>
                 {#                Ilosc porcji#}
-                <a>{{ r.servings_count }}</a>
+                <p>{{ r.servings_count }}</p>
                 {#                Trudnosc#}
                 <a>{{ r.difficulty }}</a>
+                {#            Data dodania#}
                 <p>{{ r.created_on }}</p>
-                <p>{{ date. }}</p>
-                <a><img src="{{ r.icon.url }}"></a>
+                {#            Głosy#}
+                <p>{{ r.vote_score }}</p>
+                <p><img src="{{ r.icon.url }}"></p>
             </li>
         {% endfor %}
 
         Nowe przepisy
         {% for r in recipes %}
             <li>
+                {% if forloop.first %}
+                    pierwszy
+                {% endif %}
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
                 {#                Opis#}
-                <a>{{ r.content|safe }} </a>
+                <p>{{ r.content|safe }} </p>
                 {#                Czas przygotowania#}
-                <a>{{ r.preparation_time }}</a>
+                <p>{{ r.preparation_time }}</p>
                 {#                Ilosc porcji#}
-                <a>{{ r.servings_count }}</a>
+                <p>{{ r.servings_count }}</p>
                 {#                Trudnosc#}
-                <a>{{ r.difficulty }}</a>
+                <p>{{ r.difficulty }}</p>
+                {#            Data dodania#}
+                <p>{{ r.created_on }}</p>
+                {#            Głosy#}
+                <p>{{ r.vote_score }}</p>
             </li>
         {% endfor %}
     </ul>
