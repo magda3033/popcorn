@@ -5,7 +5,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 
 from .forms import RecipeForm, CommentForm
-from .models import Recipe
+from .models import Recipe, Category
 
 # Create your views here.
 # class IndexView(generic.DetailView):
@@ -14,7 +14,6 @@ from .models import Recipe
 def index(request):
     return render(request, 'popcorn/main_page.html', {'recipes': Recipe.objects.all()})
 
-
 def recipe(request, slug):
     return render(request, 'popcorn/recipe.html')
 
@@ -22,6 +21,10 @@ class RecipeView(generic.DetailView):
     model = Recipe
     template_name = 'popcorn/recipe.html'
 
+class CategoriesView(generic.ListView):
+    model = Category
+    context_object_name = 'categories'
+    template_name = 'popcorn/categories.html'
 
 def edit_recipe(request):
     #TODO: Automatically attach time category

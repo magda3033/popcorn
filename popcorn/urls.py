@@ -27,6 +27,7 @@ urlpatterns = [
     path('recipes/view/<str:slug>', views.post_comment, name='recipe'),
     path('recipes/view/<str:slug>/up', views.vote_up, name='voteup'),
     path('recipes/view/<str:slug>/down', views.vote_down, name='votedown'),
+    path('categories/', views.CategoriesView.as_view(), name='categories'),
     path('accounts/profile/', views.index),
     path('accounts/register/',
         RegistrationView.as_view(
