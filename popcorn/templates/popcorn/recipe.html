@@ -13,7 +13,7 @@
                 {% endif %}
                 <h4 class="text-center">Czas wykonania: {{ recipe.preparation_time }} min</h4>
                 <h4 class="text-center">Ilość porcji: {{ recipe.servings_count }}</h4>
-                <h4 class="text-center">Trudność wykonania: {{ recipe.difficulty }}</h4>
+                <h4 class="text-center">Trudność wykonania: {{ recipe.get_difficulty_display }}</h4>
                 <!--TODO: Add scaling-->
                 {% if recipe.icon %}
                     <img src="{{ recipe.icon.url }}">
