@@ -33,21 +33,6 @@
                     pierwszy
                 {% endif %}
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
-<<<<<<< HEAD
-{#                Opis#}
-                <a>{{ r.content|safe }} </a>
-{#                Czas przygotowania#}
-                <a>{{r.preparation_time}}</a>
-{#                Ilosc porcji#}
-                <a>{{r.servings_count}}</a>
-{#                Trudnosc#}
-                <a>{{r.get_difficulty_display}}</a>
-                <br>
-                {% if r.icon %}
-                    <img src="{{ r.icon.url }}">
-                {% endif %}
-
-=======
                 {#                Opis#}
                 <p>{{ r.content|safe }} </p>
                 {#                Czas przygotowania#}
@@ -63,7 +48,6 @@
                 {% if r.icon %}
                     <img src="{{ r.icon.url }}">
                 {% endif %}
->>>>>>> master
             </li>
         {% endfor %}
     </ul>
