@@ -1,0 +1,17 @@
+{% extends "popcorn/base.html" %}
+{% block title %}Kategorie{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for c in categories %}
+            <li>
+{#                <a href=" {% url 'c' c.slug %}">{{ r.name }}</a> #}
+                <a>{{ c.name }} : {{ c.get_tag_display }}</a>
+                <br>
+                {% if c.image %}
+                    <img src="{{ c.image.url }}" style="width: 500px">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

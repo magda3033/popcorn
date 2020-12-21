@@ -49,6 +49,7 @@ class RecipeForm(forms.ModelForm):
             'content': '',
         }
 
+#Todo: Fix XSS vulnerability
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

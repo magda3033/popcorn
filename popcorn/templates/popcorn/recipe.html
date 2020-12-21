@@ -6,6 +6,7 @@
         <div class="card-body">
             <div class="col">
                 <h2 class="card-title text-center">{{ recipe.name }}</h2>
+                <a href=" {% url 'edit_recipe' r.slug %}">Edytuj</a>
                 {% if recipe.author %}
                     <h4 class="text-center">Autor: {{ recipe.author }}</h4>
                 {% else %}
@@ -13,9 +14,9 @@
                 {% endif %}
                 <h4 class="text-center">Czas wykonania: {{ recipe.preparation_time }} min</h4>
                 <h4 class="text-center">Ilość porcji: {{ recipe.servings_count }}</h4>
-                <h4 class="text-center">Trudność wykonania: {{ recipe.difficulty }}</h4>
+                <h4 class="text-center">Trudność wykonania: {{ recipe.get_difficulty_display }}</h4>
                 <!--TODO: Add scaling-->
-                {% if recipe.icon.url %}
+                {% if recipe.icon %}
                     <img src="{{ recipe.icon.url }}">
                 {% endif %}
 

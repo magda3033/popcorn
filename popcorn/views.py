@@ -8,7 +8,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 
 from .forms import RecipeForm, CommentForm
-from .models import Recipe
+from .models import Recipe, Category
 
 
 # Create your views here.
@@ -20,7 +20,6 @@ def index(request):
                   {'recipes': Recipe.objects.all(),
                    'lastweek': Recipe.objects.filter(created_on__gte=timezone.now() - datetime.timedelta(days=7))})
 
-
 def recipe(request, slug):
     return render(request, 'popcorn/recipe.html')
 
@@ -28,23 +27,43 @@ class RecipeView(generic.DetailView):
     model = Recipe
     template_name = 'popcorn/recipe.html'
 
+class CategoriesView(generic.ListView):
+    model = Category
+    context_object_name = 'categories'
+    template_name = 'popcorn/categories.html'
 
-def edit_recipe(request):
+def edit_recipe(request, slug = None):
+    #TODO: Automatically attach time category
     if not request.user.is_authenticated:
         # Todo add nice page to say that you are not authorized
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if slug is None: 
+        if request.method =='POST':
+            form = RecipeForm(request.POST, request.FILES)
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            if form.instance.author is None:
-                form.instance.author = request.user
-            # TODO: add redirection
-            form.save()
-            return render(request, 'popcorn/main_page.html')
+            if form.is_valid():
+                if form.instance.author is None:
+                    form.instance.author = request.user
+                # TODO: add redirection
+                form.save()
+                return render(request, 'popcorn/main_page.html')
+        else:
+            form = RecipeForm()
     else:
-        form = RecipeForm()
+        recipe = get_object_or_404(Recipe, slug=slug)
+        if request.method =='POST':
+            form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+
+            if form.is_valid():
+                if form.instance.author is None:
+                    form.instance.author = request.user
+                # TODO: add redirection
+                form.save()
+                return render(request, 'popcorn/main_page.html')
+        else:
+            form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+            return render(request, 'popcorn/recipe_edit.html', {'form': form})
+
     return render(request, 'popcorn/recipe_edit.html', {'form': form})
 
 
@@ -56,16 +75,30 @@ def logout_view(request):
 def vote_up(request, slug):
     review = Recipe.objects.get(slug=slug)
     user = request.user
-    review.votes.up(user.id)
+    vote = review.votes.get(user.id)
+    if vote is None:
+        review.votes.up(user.id)
+        return render(request, 'popcorn/main_page.html')
+    past_action = vote.ACTION_FIELD[vote.action]
+    if past_action == 'num_vote_up':
+        review.votes.delete(user.id) 
+    else:
+        review.votes.up(user.id)
     return render(request, 'popcorn/main_page.html')
-
 
 def vote_down(request, slug):
     review = Recipe.objects.get(slug=slug)
     user = request.user
-    review.votes.down(user.id)
+    vote = review.votes.get(user.id)
+    if vote is None:
+        review.votes.down(user.id)
+        return render(request, 'popcorn/main_page.html')
+    past_action = vote.ACTION_FIELD[vote.action]
+    if past_action == 'num_vote_down':
+        review.votes.delete(user.id) 
+    else:
+        review.votes.down(user.id)
     return render(request, 'popcorn/main_page.html')
-
 
 def post_comment(request, slug):
 

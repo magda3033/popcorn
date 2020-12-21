@@ -1,0 +1,338 @@
+[
+    {
+        "model": "popcorn.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$SCexh5Wfnlhl$9eZxAdBoPWs8vHQmNzkZImH+E7rmQ7l7otBGwSvOJNA=",
+            "last_login": "2020-12-14T08:58:08.724Z",
+            "is_superuser": false,
+            "username": "Robot",
+            "first_name": "",
+            "last_name": "",
+            "email": "robot@popcorn.pl",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-12-13T23:35:11.919Z",
+            "newsletter_signup": null,
+            "blocked_on": null,
+            "blocked_till": null,
+            "blocked_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "popcorn.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$SCexh5Wfnlhl$9eZxAdBoPWs8vHQmNzkZImH+E7rmQ7l7otBGwSvOJNA=",
+            "last_login": "2020-12-17T12:22:45.184Z",
+            "is_superuser": false,
+            "username": "Hyperion",
+            "first_name": "",
+            "last_name": "",
+            "email": "adriankonca142@gmail.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-12-13T23:35:11.919Z",
+            "newsletter_signup": null,
+            "blocked_on": null,
+            "blocked_till": null,
+            "blocked_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 1,
+        "fields": {
+            "name": "\u015aniadanie",
+            "image": "categories/1a.jpg",
+            "tag": 2
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 2,
+        "fields": {
+            "name": "Obiad",
+            "image": "categories/1b.jpg",
+            "tag": 2
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 3,
+        "fields": {
+            "name": "Kolacja",
+            "image": "categories/1c.jpg",
+            "tag": 2
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 4,
+        "fields": {
+            "name": "Mi\u0119sne",
+            "image": "categories/2a.jpg",
+            "tag": 3
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 5,
+        "fields": {
+            "name": "Wegetaria\u0144skie",
+            "image": "categories/2b.jpg",
+            "tag": 3
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 6,
+        "fields": {
+            "name": "Wega\u0144skie",
+            "image": "categories/2c.jpg",
+            "tag": 3
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 7,
+        "fields": {
+            "name": "Przystawka",
+            "image": "categories/3a.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 8,
+        "fields": {
+            "name": "Danie g\u0142\u00f3wne",
+            "image": "categories/3b.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 9,
+        "fields": {
+            "name": "Zupa",
+            "image": "categories/3c.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 10,
+        "fields": {
+            "name": "Ciasto",
+            "image": "categories/3d.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 11,
+        "fields": {
+            "name": "Przek\u0105ska",
+            "image": "categories/3e.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 12,
+        "fields": {
+            "name": "Deser",
+            "image": "categories/1d.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 13,
+        "fields": {
+            "name": "Nap\u00f3j",
+            "image": "categories/1e.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 14,
+        "fields": {
+            "name": "S\u0142one",
+            "image": "categories/4a.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 15,
+        "fields": {
+            "name": "S\u0142odkie",
+            "image": "categories/4b.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.category",
+        "pk": 16,
+        "fields": {
+            "name": "Kwa\u015bne",
+            "image": "categories/4c.jpg",
+            "tag": 4
+        }
+    },
+    {
+        "model": "popcorn.recipe",
+        "pk": 1,
+        "fields": {
+            "vote_score": 0,
+            "num_vote_up": 0,
+            "num_vote_down": 0,
+            "slug": "test-1",
+            "name": "Kwaśnik",
+            "content": "<p>Kwaśnik</p><p><br></p><p><img src=\"/media/django-summernote/2020-12-14/92cf8cdb-5a96-4304-b2a0-b7e89175b457.jpg\" style=\"width: 698px;\"></p><p><br></p><p><br></p><p>Test po jedzeniu</p>",
+            "icon": "recipes_icons/shutterstock_529627063.jpg",
+            "author": null,
+            "created_on": "2020-12-14T09:00:09.110Z",
+            "last_modified": "2020-12-17T12:21:18.936Z",
+            "preparation_time": 123,
+            "servings_count": 123,
+            "difficulty": 3,
+            "hidden_on": null,
+            "hidden_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "categories": []
+        }
+    },
+    {
+        "model": "popcorn.recipe",
+        "pk": 2,
+        "fields": {
+            "vote_score": 1,
+            "num_vote_up": 1,
+            "num_vote_down": 0,
+            "slug": "asdasd-2",
+            "name": "asdasd",
+            "content": "<p>123123</p>",
+            "icon": "recipes_icons/shutterstock_529627063_4Utopbx.jpg",
+            "author": null,
+            "created_on": "2020-12-14T09:03:02.778Z",
+            "last_modified": "2020-12-14T18:21:33.551Z",
+            "preparation_time": 1,
+            "servings_count": 1,
+            "difficulty": 3,
+            "hidden_on": null,
+            "hidden_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "categories": []
+        }
+    },
+    {
+        "model": "popcorn.recipe",
+        "pk": 3,
+        "fields": {
+            "vote_score": 0,
+            "num_vote_up": 0,
+            "num_vote_down": 0,
+            "slug": "test-autora-3",
+            "name": "Test autora",
+            "content": "<p>asdasdasd</p>",
+            "icon": "recipes_icons/shutterstock_529627063_OaAlatL.jpg",
+            "author": null,
+            "created_on": "2020-12-14T09:04:20.714Z",
+            "last_modified": "2020-12-14T09:04:20.720Z",
+            "preparation_time": 5,
+            "servings_count": 5,
+            "difficulty": 3,
+            "hidden_on": null,
+            "hidden_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "categories": []
+        }
+    },
+    {
+        "model": "popcorn.recipe",
+        "pk": 4,
+        "fields": {
+            "vote_score": 0,
+            "num_vote_up": 0,
+            "num_vote_down": 0,
+            "slug": "test-autora-v2-4",
+            "name": "Test autora v2",
+            "content": "<p>Blablabla</p>",
+            "icon": "recipes_icons/jedzenie.jpg",
+            "author": 1,
+            "created_on": "2020-12-14T09:04:58.134Z",
+            "last_modified": "2020-12-14T09:04:58.139Z",
+            "preparation_time": 10,
+            "servings_count": 10,
+            "difficulty": 3,
+            "hidden_on": null,
+            "hidden_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "categories": []
+        }
+    },
+    {
+        "model": "popcorn.recipe",
+        "pk": 5,
+        "fields": {
+            "vote_score": 0,
+            "num_vote_up": 0,
+            "num_vote_down": 0,
+            "slug": "balbllba-5",
+            "name": "Balbllba",
+            "content": "<p>asdasdasd</p>",
+            "icon": "recipes_icons/jedzenie_GlNAGtH.jpg",
+            "author": 1,
+            "created_on": "2020-12-14T09:06:35.081Z",
+            "last_modified": "2020-12-14T09:06:35.086Z",
+            "preparation_time": 5,
+            "servings_count": 5,
+            "difficulty": 3,
+            "hidden_on": null,
+            "hidden_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "categories": []
+        }
+    },
+    {
+        "model": "popcorn.recipe",
+        "pk": 6,
+        "fields": {
+            "vote_score": 0,
+            "num_vote_up": 0,
+            "num_vote_down": 0,
+            "slug": "test-kategoria-6",
+            "name": "Test Kategoria",
+            "content": "<p>123</p>",
+            "icon": "recipes_icons/shutterstock_529627063_evncLCC.jpg",
+            "author": 1,
+            "created_on": "2020-12-14T10:34:24.762Z",
+            "last_modified": "2020-12-14T10:34:24.768Z",
+            "preparation_time": 123,
+            "servings_count": 123,
+            "difficulty": 3,
+            "hidden_on": null,
+            "hidden_by": null,
+            "deleted_on": null,
+            "deleted_by": null,
+            "categories": []
+        }
+    }
+]
