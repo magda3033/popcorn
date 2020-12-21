@@ -15,10 +15,11 @@ def validate_recipe_icon(image):
     limit_mb = 20
     max_width = 1000
     max_height = 800
-    if image.file.image.width > max_width or image.file.image.height > max_height:
-        raise ValidationError("Max size of file is {} by {}".format(max_width, max_height))
-    if file_size > 1024 * 1024 * limit_mb:
-        raise ValidationError("Max size of file is {} MB".format(limit_mb))
+    if image.file:
+        if image.width > max_width or image.height > max_height:
+            raise ValidationError("Max size of file is {} by {}".format(max_width, max_height))
+        if file_size > 1024 * 1024 * limit_mb:
+            raise ValidationError("Max size of file is {} MB".format(limit_mb))
 
 class User(AbstractUser):
     newsletter_signup = models.BinaryField(blank=True, null=True)

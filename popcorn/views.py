@@ -26,23 +26,38 @@ class CategoriesView(generic.ListView):
     context_object_name = 'categories'
     template_name = 'popcorn/categories.html'
 
-def edit_recipe(request):
+def edit_recipe(request, slug = None):
     #TODO: Automatically attach time category
     if not request.user.is_authenticated:
         #Todo add nice page to say that you are not authorized 
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    if slug is None: 
+        if request.method =='POST':
+            form = RecipeForm(request.POST, request.FILES)
 
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            if form.instance.author is None:
-                form.instance.author = request.user
-            # TODO: add redirection
-            form.save()
-            return render(request, 'popcorn/main_page.html')
+            if form.is_valid():
+                if form.instance.author is None:
+                    form.instance.author = request.user
+                # TODO: add redirection
+                form.save()
+                return render(request, 'popcorn/main_page.html')
+        else:
+            form = RecipeForm()
     else:
-        form = RecipeForm()
+        recipe = get_object_or_404(Recipe, slug=slug)
+        if request.method =='POST':
+            form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+
+            if form.is_valid():
+                if form.instance.author is None:
+                    form.instance.author = request.user
+                # TODO: add redirection
+                form.save()
+                return render(request, 'popcorn/main_page.html')
+        else:
+            form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+            return render(request, 'popcorn/recipe_edit.html', {'form': form})
+
     return render(request, 'popcorn/recipe_edit.html', {'form': form})
 
 
