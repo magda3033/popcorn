@@ -4,27 +4,36 @@
 {% block content %}
     <ul>
         Top tygodnia
-        {% for r in lastweek%}
+        {% for r in lastweek %}
+
             <li>
+                {% if forloop.first %}
+                    pierwszy
+                {% endif %}
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
                 {#                Opis#}
-                <a>{{ r.content|safe }} </a>
+                <p>{{ r.content|safe }} </p>
                 {#                Czas przygotowania#}
-                <a>{{ r.preparation_time }}</a>
+                <p>{{ r.preparation_time }}</p>
                 {#                Ilosc porcji#}
-                <a>{{ r.servings_count }}</a>
+                <p>{{ r.servings_count }}</p>
                 {#                Trudnosc#}
                 <a>{{ r.get_difficulty_display }}</a>
                 <p>{{ r.created_on }}</p>
-                <p>{{ date. }}</p>
-                <a><img src="{{ r.icon.url }}"></a>
+                {#            Głosy#}
+                <p>{{ r.vote_score }}</p>
+                <p><img src="{{ r.icon.url }}"></p>
             </li>
         {% endfor %}
 
         Nowe przepisy
         {% for r in recipes %}
             <li>
+                {% if forloop.first %}
+                    pierwszy
+                {% endif %}
                 <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
+<<<<<<< HEAD
 {#                Opis#}
                 <a>{{ r.content|safe }} </a>
 {#                Czas przygotowania#}
@@ -38,6 +47,23 @@
                     <img src="{{ r.icon.url }}">
                 {% endif %}
 
+=======
+                {#                Opis#}
+                <p>{{ r.content|safe }} </p>
+                {#                Czas przygotowania#}
+                <p>{{ r.preparation_time }}</p>
+                {#                Ilosc porcji#}
+                <p>{{ r.servings_count }}</p>
+                {#                Trudnosc#}
+                <p>{{ r.get_difficulty_display }}</p>
+                {#            Data dodania#}
+                <p>{{ r.created_on }}</p>
+                {#            Głosy#}
+                <p>{{ r.vote_score }}</p>
+                {% if r.icon %}
+                    <img src="{{ r.icon.url }}">
+                {% endif %}
+>>>>>>> master
             </li>
         {% endfor %}
     </ul>
