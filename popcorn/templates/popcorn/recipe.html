@@ -6,6 +6,7 @@
         <div class="card-body">
             <div class="col">
                 <h2 class="card-title text-center">{{ recipe.name }}</h2>
+                <a href=" {% url 'edit_recipe' r.slug %}">Edytuj</a>
                 {% if recipe.author %}
                     <h4 class="text-center">Autor: {{ recipe.author }}</h4>
                 {% else %}
