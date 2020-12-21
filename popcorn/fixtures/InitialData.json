@@ -334,44 +334,5 @@
             "deleted_by": null,
             "categories": []
         }
-    },
-    {
-        "model": "popcorn.comment",
-        "pk": 1,
-        "fields": {
-            "author": 1,
-            "content": "Test",
-            "created_on": "2020-12-14T10:26:39.260Z",
-            "last_modified": "2020-12-14T10:26:39.260Z",
-            "deleted_on": null,
-            "deleted_by": null,
-            "recipe": 1
-        }
-    },
-    {
-        "model": "popcorn.comment",
-        "pk": 2,
-        "fields": {
-            "author": 1,
-            "content": "Bla bla bla",
-            "created_on": "2020-12-14T10:26:43.870Z",
-            "last_modified": "2020-12-14T10:26:43.870Z",
-            "deleted_on": null,
-            "deleted_by": null,
-            "recipe": 1
-        }
-    },
-    {
-        "model": "popcorn.comment",
-        "pk": 3,
-        "fields": {
-            "author": 1,
-            "content": "Burger",
-            "created_on": "2020-12-14T10:34:49.335Z",
-            "last_modified": "2020-12-14T10:34:49.335Z",
-            "deleted_on": null,
-            "deleted_by": null,
-            "recipe": 6
-        }
     }
 ]
