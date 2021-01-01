@@ -78,13 +78,13 @@ def vote_up(request, slug):
     vote = review.votes.get(user.id)
     if vote is None:
         review.votes.up(user.id)
-        return render(request, 'popcorn/main_page.html')
+        return post_comment(request, slug)
     past_action = vote.ACTION_FIELD[vote.action]
     if past_action == 'num_vote_up':
         review.votes.delete(user.id) 
     else:
         review.votes.up(user.id)
-    return render(request, 'popcorn/main_page.html')
+    return post_comment(request, slug)
 
 def vote_down(request, slug):
     review = Recipe.objects.get(slug=slug)
@@ -92,13 +92,13 @@ def vote_down(request, slug):
     vote = review.votes.get(user.id)
     if vote is None:
         review.votes.down(user.id)
-        return render(request, 'popcorn/main_page.html')
+        return post_comment(request, slug)
     past_action = vote.ACTION_FIELD[vote.action]
     if past_action == 'num_vote_down':
         review.votes.delete(user.id) 
     else:
         review.votes.down(user.id)
-    return render(request, 'popcorn/main_page.html')
+    return post_comment(request, slug)
 
 def post_comment(request, slug):
 
