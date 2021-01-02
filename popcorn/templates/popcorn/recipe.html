@@ -1,5 +1,11 @@
 {% extends "popcorn/base.html" %}
-{% block title %}{{ recipe.name }}{% endblock %}
+{% load static %}
+{% block title %}
+    {{ recipe.name }}
+{% endblock %}
+{% block additional_js %}
+    <script src="{% static 'popcorn/js/recipe.js' %}"></script>
+{% endblock %}
 
 {% block content %}
     <div class="card margin-big ">
@@ -23,9 +29,21 @@
                 <!--TODO: Add ingredients -->
                 <!--TODO: Add categories -->
                 <!--TODO: Add voting-->
-                <a class="nav-link" href="{% url 'voteup' recipe.slug %}">Like</a>
-                <a class="nav-link" href="{% url 'votedown' recipe.slug %}">Unlike</a>
-                <h4 class="text-center">Głosy: {{ recipe.vote_score }}</h4>
+                {% if user.is_authenticated %}
+                    {% if vote_status == 'up' %}
+                        <a class="nav-link vote vote-up" id="recipe-vote-button-up" onclick="voteRecipe('up')">Like</a>
+                        <a class="nav-link vote" id="recipe-vote-button-down" onclick="voteRecipe('down')">Unlike</a>
+                    {% elif vote_status == 'down' %}
+                        <a class="nav-link vote" id="recipe-vote-button-up" onclick="voteRecipe('up')">Like</a>
+                        <a class="nav-link vote vote-down" id="recipe-vote-button-down" onclick="voteRecipe('down')">Unlike</a>
+                    {% else %}
+                        <a class="nav-link vote" id="recipe-vote-button-up" onclick="voteRecipe('up')">Like</a>
+                        <a class="nav-link vote" id="recipe-vote-button-down" onclick="voteRecipe('down')">Unlike</a>
+                    {% endif %}
+                {% else %}
+                    <h4>Chcesz głosować? <a href="{% url 'login' %}">Zaloguj się!</a></h4>
+                {% endif %}
+                <h4 class="text-center" id="recipe-vote-count">Głosy: {{ recipe.vote_score }}</h4>
                 <h4 class="text-center"></h4>
                 <!--TODO: Add food icon-->
                 {{ recipe.content|safe }}

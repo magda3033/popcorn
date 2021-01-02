@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
@@ -6,6 +7,7 @@ from django.utils import timezone
 from django.views import generic
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse, HttpResponse
 
 from .forms import RecipeForm, CommentForm
 from .models import Recipe, Category
@@ -71,34 +73,37 @@ def logout_view(request):
     logout(request)
     return render(request, 'popcorn/logout_success.html')
 
+ACTIONS = {'up': 0, 'down': 1, 0: 'up', 1: 'down'}
+NONE_ACTION = 'default'
 
-def vote_up(request, slug):
-    review = Recipe.objects.get(slug=slug)
-    user = request.user
-    vote = review.votes.get(user.id)
-    if vote is None:
-        review.votes.up(user.id)
-        return post_comment(request, slug)
-    past_action = vote.ACTION_FIELD[vote.action]
-    if past_action == 'num_vote_up':
-        review.votes.delete(user.id) 
-    else:
-        review.votes.up(user.id)
-    return post_comment(request, slug)
+def get_vote_status(recipe, user):
 
-def vote_down(request, slug):
-    review = Recipe.objects.get(slug=slug)
+    vote = recipe.votes.get(user.id)
+    if vote:
+        return ACTIONS[vote.action]
+    return NONE_ACTION
+
+def vote_recipe(request, slug):
+
+    recipe = Recipe.objects.get(slug=slug)
     user = request.user
-    vote = review.votes.get(user.id)
-    if vote is None:
-        review.votes.down(user.id)
-        return post_comment(request, slug)
-    past_action = vote.ACTION_FIELD[vote.action]
-    if past_action == 'num_vote_down':
-        review.votes.delete(user.id) 
+
+    if not user.is_authenticated:
+        return HttpResponse('Unauthorized', status=401)
+    vote = recipe.votes.get(user.id)
+    body = json.loads(request.body)
+    action_string = body['action']
+    action_result = action_string
+    action_value = ACTIONS[action_string]
+
+    if vote is not None and vote.action == action_value:
+        action_result = NONE_ACTION
+        recipe.votes.delete(user.id)
     else:
-        review.votes.down(user.id)
-    return post_comment(request, slug)
+        recipe.votes.vote(user.id, action_value)
+
+    recipe = Recipe.objects.get(slug=slug)
+    return JsonResponse({'action': action_result, 'count': recipe.vote_score})
 
 def post_comment(request, slug):
 
@@ -133,4 +138,5 @@ def post_comment(request, slug):
     return render(request, template_name, {'recipe': recipe,
                                            'comments': comments,
                                            'new_comment': new_comment,
-                                           'comment_form': comment_form})
+                                           'comment_form': comment_form,
+                                           'vote_status': get_vote_status(recipe, request.user)})
