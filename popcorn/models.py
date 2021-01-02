@@ -30,7 +30,6 @@ class User(AbstractUser):
     deleted_on = models.DateTimeField(blank=True, null=True)
     deleted_by = models.ForeignKey("User", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
                                    blank=True)
-    # MAYBE: avatar
 
 class Category(models.Model):
     class Tag(models.IntegerChoices):
@@ -81,7 +80,6 @@ class Recipe(VoteModel, models.Model):
         self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
 
-
 class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_comments')
     content = models.TextField()
@@ -94,11 +92,9 @@ class Comment(models.Model):
     def is_deleted(self):
         return self.deleted_on is not None
 
-
 class Measurment(models.Model):
     full_name = models.CharField(max_length=120)
     short_name = models.CharField(max_length=6)
-
 
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
