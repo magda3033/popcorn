@@ -37,7 +37,12 @@ class RecipeForm(forms.ModelForm):
             'servings_count': forms.NumberInput(attrs={'class': 'form-control'}),
             # 'categories': forms.CheckboxSelectMultiple(attrs={'class': 'form-control'},choices=OPTIONS),
             # 'icon': forms.ImageField(),
-            'content': SummernoteWidget(),
+            'content': SummernoteWidget({
+                'summernote': {
+                    'width': '100%',
+                    'height': '2000',
+                },
+            }),
         }
         labels = {
             'name': 'Nazwa przepisu',
@@ -54,6 +59,18 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+        widgets = {'content' : SummernoteWidget({
+            'summernote': {
+                'toolbar': [
+                    ['style', ['style', ]],
+                    ['font', ['bold', 'italic', 'underline', 'color', ]],
+                    ['paragraph', ['paragraph', 'ol', 'ul', ]],
+                    ['misc', ['undo', 'redo' ]],
+                ],
+                'width': '100%',
+                'height': '400',
+            },
+        })}
         labels = {'content': ''}
 
 class UserRegistrationForm(RegistrationForm):
