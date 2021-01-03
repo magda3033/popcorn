@@ -14,15 +14,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function updateCommentVoteValue(body, id) {
-    if (body === null) {
-        return;
-    }
-    const voteCount = body.count;
-    const result = body.action;
-    document.getElementById('comment-vote-count-' + id.toString()).innerHTML = `Głosy: ${voteCount}`;
-    const voteUpButton = document.getElementById('comment-vote-button-up-' + id.toString()) 
-    const voteDownButton = document.getElementById('comment-vote-button-down-' + id.toString()) 
+function updateVoteButtonStyle(result, voteUpButton, voteDownButton) {
     if (result === 'up') {
         voteUpButton.classList.add('vote-up')
         voteDownButton.classList.remove('vote-down')
@@ -33,6 +25,17 @@ function updateCommentVoteValue(body, id) {
         voteUpButton.classList.remove('vote-up')
         voteDownButton.classList.remove('vote-down')
     }
+}
+function updateCommentVoteValue(body, id) {
+    if (body === null) {
+        return;
+    }
+    const voteCount = body.count;
+    const result = body.action;
+    document.getElementById('comment-vote-count-' + id.toString()).innerHTML = `Głosy: ${voteCount}`;
+    const voteUpButton = document.getElementById('comment-vote-button-up-' + id.toString()) ;
+    const voteDownButton = document.getElementById('comment-vote-button-down-' + id.toString());
+    updateVoteButtonStyle(result, voteUpButton, voteDownButton);
 }
 
 function updateRecipeVoteValue(body) {
@@ -45,16 +48,7 @@ function updateRecipeVoteValue(body) {
     document.getElementById('recipe-vote-count').innerHTML = `Głosy: ${voteCount}`;
     const voteUpButton = document.getElementById('recipe-vote-button-up') 
     const voteDownButton = document.getElementById('recipe-vote-button-down') 
-    if (result === 'up') {
-        voteUpButton.classList.add('vote-up')
-        voteDownButton.classList.remove('vote-down')
-    } else if (result === 'down') {
-        voteUpButton.classList.remove('vote-up')
-        voteDownButton.classList.add('vote-down')
-    } else if (result === 'default') {
-        voteUpButton.classList.remove('vote-up')
-        voteDownButton.classList.remove('vote-down')
-    }
+    updateVoteButtonStyle(result, voteUpButton, voteDownButton);
 }
 
 function parseResponse(response) {
@@ -92,13 +86,15 @@ function voteRecipe(event) {
         }
     ).then(response => parseResponse(response)).then(body => updateRecipeVoteValue(body));
 }
+
 window.onload = function () {
     commentsVotes = document.querySelectorAll("[id^='comment-vote-button']")
     commentsVotes.forEach(commentVoteButton => {
         commentVoteButton.addEventListener('click', voteComment)
     });
+
     recipeVotes = document.querySelectorAll("[id^='recipe-vote-button']")
-    recipeVotes.forEach(recipeVote => {
-        recipeVote.addEventListener('click', voteRecipe)
+    recipeVotes.forEach(recipeVoteButton => {
+        recipeVoteButton.addEventListener('click', voteRecipe)
     });
 }
