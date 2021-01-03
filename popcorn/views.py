@@ -46,9 +46,8 @@ def edit_recipe(request, slug = None):
             if form.is_valid():
                 if form.instance.author is None:
                     form.instance.author = request.user
-                # TODO: add redirection
                 form.save()
-                return render(request, 'popcorn/main_page.html')
+                return HttpResponseRedirect(reverse("recipe", kwargs={'slug': form.instance.slug}))
         else:
             form = RecipeForm()
     else:
@@ -59,9 +58,8 @@ def edit_recipe(request, slug = None):
             if form.is_valid():
                 if form.instance.author is None:
                     form.instance.author = request.user
-                # TODO: add redirection
                 form.save()
-                return render(request, 'popcorn/main_page.html')
+                return HttpResponseRedirect(reverse("recipe", kwargs={'slug': form.instance.slug}))
         else:
             form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
             return render(request, 'popcorn/recipe_edit.html', {'form': form})
