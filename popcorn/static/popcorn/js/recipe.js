@@ -14,6 +14,27 @@ function getCookie(name) {
     return cookieValue;
 }
 
+function updateCommentVoteValue(body, id) {
+    if (body === null) {
+        return;
+    }
+    const voteCount = body.count;
+    const result = body.action;
+    document.getElementById('comment-vote-count-' + id.toString()).innerHTML = `Głosy: ${voteCount}`;
+    const voteUpButton = document.getElementById('comment-vote-button-up-' + id.toString()) 
+    const voteDownButton = document.getElementById('comment-vote-button-down-' + id.toString()) 
+    if (result === 'up') {
+        voteUpButton.classList.add('vote-up')
+        voteDownButton.classList.remove('vote-down')
+    } else if (result === 'down') {
+        voteUpButton.classList.remove('vote-up')
+        voteDownButton.classList.add('vote-down')
+    } else if (result === 'default') {
+        voteUpButton.classList.remove('vote-up')
+        voteDownButton.classList.remove('vote-down')
+    }
+}
+
 function updateRecipeVoteValue(body) {
     if (body === null) {
         return;
@@ -45,7 +66,23 @@ function parseResponse(response) {
     }
 }
 
-function voteRecipe(action) {
+function voteComment(event) {
+    let idParts = event.target.id.split('-');
+    let id = idParts[idParts.length - 1];
+    let action = idParts[idParts.length - 2];
+    const csrftoken = getCookie('csrftoken');
+    fetch('/comments/vote/' + id.toString(),
+        {
+            method: 'POST',
+            headers: {'X-CSRFToken': csrftoken},
+            body: JSON.stringify({ action: action })
+        }
+    ).then(response => parseResponse(response)).then(body => updateCommentVoteValue(body, id));
+}
+
+function voteRecipe(event) {
+    let idParts = event.target.id.split('-');
+    let action = idParts[idParts.length - 1];
     const csrftoken = getCookie('csrftoken');
     fetch(window.location.pathname + '/vote',
         {
@@ -54,4 +91,14 @@ function voteRecipe(action) {
             body: JSON.stringify({ action: action })
         }
     ).then(response => parseResponse(response)).then(body => updateRecipeVoteValue(body));
+}
+window.onload = function () {
+    commentsVotes = document.querySelectorAll("[id^='comment-vote-button']")
+    commentsVotes.forEach(commentVoteButton => {
+        commentVoteButton.addEventListener('click', voteComment)
+    });
+    recipeVotes = document.querySelectorAll("[id^='recipe-vote-button']")
+    recipeVotes.forEach(recipeVote => {
+        recipeVote.addEventListener('click', voteRecipe)
+    });
 }
