@@ -42,7 +42,17 @@ class Category(models.Model):
     image = models.ImageField(upload_to='categories/')
     tag = models.IntegerField(choices=Tag.choices, default=Tag.CATEGORY)
 
-class Recipe(VoteModel, models.Model):
+class VoteUtilities():
+    ACTIONS = {'up': 0, 'down': 1, 0: 'up', 1: 'down'}
+    NONE_ACTION = 'default'
+
+    def get_vote_status(self, user):
+        vote = self.votes.get(user.id)
+        if vote:
+            return self.ACTIONS[vote.action]
+        return self.NONE_ACTION
+
+class Recipe(VoteModel, models.Model, VoteUtilities):
     class Difficulty(models.IntegerChoices):
         VERY_EASY = 1, ('Bardzo łatwa')
         EASY = 2, ('Łatwa')
@@ -80,7 +90,7 @@ class Recipe(VoteModel, models.Model):
         self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
 
-class Comment(VoteModel, models.Model):
+class Comment(VoteModel, models.Model, VoteUtilities):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_comments')
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)

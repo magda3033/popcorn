@@ -61,16 +61,6 @@ def logout_view(request):
     logout(request)
     return render(request, 'popcorn/logout_success.html')
 
-ACTIONS = {'up': 0, 'down': 1, 0: 'up', 1: 'down'}
-NONE_ACTION = 'default'
-
-def get_vote_status(recipe, user):
-
-    vote = recipe.votes.get(user.id)
-    if vote:
-        return ACTIONS[vote.action]
-    return NONE_ACTION
-
 def vote_recipe(request, slug):
 
     recipe = Recipe.objects.get(slug=slug)
@@ -82,10 +72,10 @@ def vote_recipe(request, slug):
     body = json.loads(request.body)
     action_string = body['action']
     action_result = action_string
-    action_value = ACTIONS[action_string]
+    action_value = recipe.ACTIONS[action_string]
 
     if vote is not None and vote.action == action_value:
-        action_result = NONE_ACTION
+        action_result = recipe.NONE_ACTION
         recipe.votes.delete(user.id)
     else:
         recipe.votes.vote(user.id, action_value)
@@ -128,4 +118,4 @@ def post_comment(request, slug):
                                            'comments': comments,
                                            'new_comment': new_comment,
                                            'comment_form': comment_form,
-                                           'vote_status': get_vote_status(recipe, request.user)})
+                                           'vote_status': recipe.get_vote_status(request.user)})
