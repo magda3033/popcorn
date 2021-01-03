@@ -39,33 +39,23 @@ def edit_recipe(request, slug = None):
     if not request.user.is_authenticated:
         # Todo add nice page to say that you are not authorized
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
-    if slug is None: 
-        if request.method =='POST':
-            form = RecipeForm(request.POST, request.FILES)
 
-            if form.is_valid():
-                if form.instance.author is None:
-                    form.instance.author = request.user
-                form.save()
-                return HttpResponseRedirect(reverse("recipe", kwargs={'slug': form.instance.slug}))
-        else:
-            form = RecipeForm()
+    if slug is None: 
+        recipe = None
     else:
         recipe = get_object_or_404(Recipe, slug=slug)
-        if request.method =='POST':
-            form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
 
-            if form.is_valid():
-                if form.instance.author is None:
-                    form.instance.author = request.user
-                form.save()
-                return HttpResponseRedirect(reverse("recipe", kwargs={'slug': form.instance.slug}))
-        else:
-            form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
-            return render(request, 'popcorn/recipe_edit.html', {'form': form})
+    if request.method =='POST':
+        form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+        if form.is_valid():
+            if form.instance.author is None:
+                form.instance.author = request.user
+            form.save()
+            return HttpResponseRedirect(reverse("recipe", kwargs={'slug': form.instance.slug}))
+    else:
+        form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
 
     return render(request, 'popcorn/recipe_edit.html', {'form': form})
-
 
 def logout_view(request):
     logout(request)
