@@ -80,7 +80,7 @@ class Recipe(VoteModel, models.Model):
         self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
 
-class Comment(models.Model):
+class Comment(VoteModel, models.Model):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_comments')
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
