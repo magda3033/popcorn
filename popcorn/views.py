@@ -128,6 +128,8 @@ def post_comment(request, slug):
                 new_comment.author = request.user
             # Save the comment to the database
             new_comment.save()
+            #Add upvote for the comment from the creater.
+            new_comment.votes.vote(request.user.id, new_comment.ACTIONS['up'])
             return HttpResponseRedirect(reverse("recipe", kwargs={'slug':slug}))
     else:
         if not request.user.is_authenticated:
