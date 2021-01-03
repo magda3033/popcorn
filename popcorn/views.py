@@ -2,12 +2,12 @@ import datetime
 import json
 
 from django.contrib.auth import logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 from django.views import generic
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 
 from .forms import RecipeForm, CommentForm
 from .models import Recipe, Category
@@ -129,6 +129,7 @@ def post_comment(request, slug):
                 new_comment.author = request.user
             # Save the comment to the database
             new_comment.save()
+            return HttpResponseRedirect(reverse("recipe", kwargs={'slug':slug}))
     else:
         if not request.user.is_authenticated:
             comment_form = None
