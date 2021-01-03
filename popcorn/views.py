@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 
 from .forms import RecipeForm, CommentForm
-from .models import Recipe, Category
+from .models import Recipe, Category, Comment
 
 
 # Create your views here.
@@ -83,6 +83,27 @@ def vote_recipe(request, slug):
     recipe = Recipe.objects.get(slug=slug)
     return JsonResponse({'action': action_result, 'count': recipe.vote_score})
 
+def vote_comment(request, pk):
+    comment = Comment.objects.get(pk=pk)
+    user = request.user
+
+    if not user.is_authenticated:
+        return HttpResponse('Unauthorized', status=401)
+    vote = comment.votes.get(user.id)
+    body = json.loads(request.body)
+    action_string = body['action']
+    action_result = action_string
+    action_value = comment.ACTIONS[action_string]
+
+    if vote is not None and vote.action == action_value:
+        action_result = comment.NONE_ACTION
+        comment.votes.delete(user.id)
+    else:
+        comment.votes.vote(user.id, action_value)
+
+    comment = Comment.objects.get(pk=pk)
+    return JsonResponse({'action': action_result, 'count': comment.vote_score})
+
 def post_comment(request, slug):
 
     template_name = 'popcorn/recipe.html'
@@ -113,6 +134,11 @@ def post_comment(request, slug):
             comment_form = None
         else:
             comment_form = CommentForm()
+
+    comments = zip(
+        comments,
+        [c.get_vote_status(request.user) for c in comments]
+    )
 
     return render(request, template_name, {'recipe': recipe,
                                            'comments': comments,
