@@ -30,7 +30,6 @@ class User(AbstractUser):
     deleted_on = models.DateTimeField(blank=True, null=True)
     deleted_by = models.ForeignKey("User", on_delete=models.SET_NULL, null=True, related_name='deleted_users',
                                    blank=True)
-    # MAYBE: avatar
 
 class Category(models.Model):
     class Tag(models.IntegerChoices):
@@ -43,17 +42,17 @@ class Category(models.Model):
     image = models.ImageField(upload_to='categories/')
     tag = models.IntegerField(choices=Tag.choices, default=Tag.CATEGORY)
 
+class VoteUtilities():
+    ACTIONS = {'up': 0, 'down': 1, 0: 'up', 1: 'down'}
+    NONE_ACTION = 'default'
 
-# class Vote(models.Model):
-#     object_id = models.PositiveIntegerField()
-#     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-#     value = models.BinaryField()
-#     voted_on = models.DateTimeField(auto_now_add=True)
-#     vote_target = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-#     target_id = GenericForeignKey('vote_target')
+    def get_vote_status(self, user):
+        vote = self.votes.get(user.id)
+        if vote:
+            return self.ACTIONS[vote.action]
+        return self.NONE_ACTION
 
-
-class Recipe(VoteModel, models.Model):
+class Recipe(VoteModel, models.Model, VoteUtilities):
     class Difficulty(models.IntegerChoices):
         VERY_EASY = 1, ('Bardzo łatwa')
         EASY = 2, ('Łatwa')
@@ -80,12 +79,6 @@ class Recipe(VoteModel, models.Model):
     deleted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='deleted_recipes',
                                    blank=True)
 
-    # TODO: Fix relations in recipe
-    # comments = GenericRelation('Comment')
-    # votes = GenericRelation('Vote')
-
-    # TODO: When WYSIWYG is picked add images
-
     def is_hidden(self):
         return self.hidden_on is not None
 
@@ -97,9 +90,7 @@ class Recipe(VoteModel, models.Model):
         self.slug = slugify(self.name + " " + str(self.id), allow_unicode=False)
         super().save(*args, **kwargs)
 
-
-class Comment(models.Model):
-    #object_id = models.PositiveIntegerField()
+class Comment(VoteModel, models.Model, VoteUtilities):
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='authored_comments')
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
@@ -107,21 +98,13 @@ class Comment(models.Model):
     deleted_on = models.DateTimeField(null=True)
     deleted_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='comments_deleted')
     recipe = models.ForeignKey(Recipe, on_delete=models.SET_NULL, null=True, related_name='comments')
-    #comment_parent = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True)
-    #parent_id = GenericForeignKey('comment_parent')
-
-    # TODO: Fix relations in comment
-    # comments = GenericRelation('Comment')
-    # votes = GenericRelation('Vote')
 
     def is_deleted(self):
         return self.deleted_on is not None
 
-
 class Measurment(models.Model):
     full_name = models.CharField(max_length=120)
     short_name = models.CharField(max_length=6)
-
 
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

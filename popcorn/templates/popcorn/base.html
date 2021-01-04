@@ -13,6 +13,8 @@
             integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'popcorn/css/style.css' %}">
+    {% block additional_js %}
+    {% endblock additional_js %}
 </head>
 <body class="bg">
 <nav class="navbar navbar-expand-lg navbar-light navbar-cstm">
@@ -66,7 +68,7 @@
                 <h1 class="top-buffer">NEWSLETTER</h1>
                 <label for="inputEmailNewsletter" class="sr-only">Adres Email Newsletter</label>
                 <input type="email" id="inputEmailNewsletter" class="form-control top-buffer inputBox cstm-shadow"
-                       placeholder="Adres Email" required autofocus>
+                       placeholder="Adres Email" required>
                 <button class="btn classic-btn cstm-shadow btn-lg top-buffer align-self-end" type="submit">Zapisz się
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-caret-right-fill"
                          fill="currentColor" xmlns="http://www.w3.org/2000/svg">

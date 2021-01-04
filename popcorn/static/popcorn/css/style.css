@@ -62,3 +62,16 @@
 .margin-big {
     margin: 200px;
 }
+
+.vote {
+    cursor: pointer;
+    background-color: gray;
+}
+
+.vote-up {
+    background-color: greenyellow;
+}
+
+.vote-down {
+    background-color: orange;
+}

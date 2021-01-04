@@ -1,5 +1,11 @@
 {% extends "popcorn/base.html" %}
-{% block title %}{{ recipe.name }}{% endblock %}
+{% load static %}
+{% block title %}
+    {{ recipe.name }}
+{% endblock %}
+{% block additional_js %}
+    <script src="{% static 'popcorn/js/recipe.js' %}"></script>
+{% endblock %}
 
 {% block content %}
     <div class="card margin-big ">
@@ -23,9 +29,21 @@
                 <!--TODO: Add ingredients -->
                 <!--TODO: Add categories -->
                 <!--TODO: Add voting-->
-                <a class="nav-link" href="{% url 'voteup' recipe.slug %}">Like</a>
-                <a class="nav-link" href="{% url 'votedown' recipe.slug %}">Unlike</a>
-                <h4 class="text-center">Głosy: {{ recipe.vote_score }}</h4>
+                {% if user.is_authenticated %}
+                    {% if vote_status == 'up' %}
+                        <a class="nav-link vote vote-up" id="recipe-vote-button-up">Like</a>
+                        <a class="nav-link vote" id="recipe-vote-button-down">Unlike</a>
+                    {% elif vote_status == 'down' %}
+                        <a class="nav-link vote" id="recipe-vote-button-up">Like</a>
+                        <a class="nav-link vote vote-down" id="recipe-vote-button-down">Unlike</a>
+                    {% else %}
+                        <a class="nav-link vote" id="recipe-vote-button-up">Like</a>
+                        <a class="nav-link vote" id="recipe-vote-button-down">Unlike</a>
+                    {% endif %}
+                {% else %}
+                    <h4>Chcesz głosować? <a href="{% url 'login' %}">Zaloguj się!</a></h4>
+                {% endif %}
+                <h4 class="text-center" id="recipe-vote-count">Głosy: {{ recipe.vote_score }}</h4>
                 <h4 class="text-center"></h4>
                 <!--TODO: Add food icon-->
                 {{ recipe.content|safe }}
@@ -35,7 +53,7 @@
                     <form method="post" style="margin-top: 1.3em;">
                         {{ comment_form.as_p }}
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Odpowiedz</button>
                     </form>
                 {% else %}
                     <p>Zaloguj się aby mieć możliwość dodawania komentarzy.</p>
@@ -43,11 +61,24 @@
 
                 <!--TODO: Add comments-->
                 <ol>
-                    {% for c in comments %}
+                    {% for c, status in comments %}
                         {% if c.author %}
                             <a>Autor: {{ c.author }} </a>
                         {% else %}
                             <a>Autor: [Skasowany] </a>
+                        {% endif %}
+                        <div class="text" id="comment-vote-count-{{ c.id }}">Głosy: {{ c.vote_score }}</div>
+                        {% if user.is_authenticated %}
+                            {% if status == 'up' %}
+                                <a class="nav-link vote vote-up" id="comment-vote-button-up-{{ c.id }}">Like</a>
+                                <a class="nav-link vote" id="comment-vote-button-down-{{ c.id }}">Unlike</a>
+                            {% elif status == 'down' %}
+                                <a class="nav-link vote" id="comment-vote-button-up-{{ c.id }}">Like</a>
+                                <a class="nav-link vote vote-down" id="comment-vote-button-down-{{ c.id }}">Unlike</a>
+                            {% else %}
+                                <a class="nav-link vote" id="comment-vote-button-up-{{ c.id }}">Like</a>
+                                <a class="nav-link vote" id="comment-vote-button-down-{{ c.id }}">Unlike</a>
+                            {% endif %}
                         {% endif %}
                         <br>
                         <a>{{ c.content|safe }} </a>
