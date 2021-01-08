@@ -54,14 +54,13 @@
     >
 </nav>
 
-<div class="content container">
+<main role="main" class="content container">
     {% block content %}
     {% endblock %}
-</div>
-
-<footer class="footer mt-auto py-3 navbar-cstm">
+</main>
+<footer class="footer mt-auto py-3 navbar-cstm fixed-bottom">
     <div class="container">
-        <div class="row align-items-top">
+        <div class="row ">
             <div class="col py-2">
                 <h1 class="top-buffer">NEWSLETTER</h1>
                 <label for="inputEmailNewsletter" class="sr-only">Adres Email Newsletter</label>
@@ -81,7 +80,7 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> 
 
 </body>
 </html>
