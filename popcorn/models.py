@@ -42,6 +42,9 @@ class Category(models.Model):
     image = models.ImageField(upload_to='categories/')
     tag = models.IntegerField(choices=Tag.choices, default=Tag.CATEGORY)
 
+    def __str__(self):
+        return self.name
+
 class VoteUtilities():
     ACTIONS = {'up': 0, 'down': 1, 0: 'up', 1: 'down'}
     NONE_ACTION = 'default'
