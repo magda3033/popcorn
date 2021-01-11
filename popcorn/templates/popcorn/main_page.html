@@ -50,5 +50,30 @@
                 {% endif %}
             </li>
         {% endfor %}
+
+        Dla Ciebie
+        {% for r in proposed %}
+            <li>
+                {% if forloop.first %}
+                    pierwszy
+                {% endif %}
+                <a href=" {% url 'recipe' r.slug %}">{{ r.name }}</a>
+                {#                Opis#}
+                <p>{{ r.content|safe }} </p>
+                {#                Czas przygotowania#}
+                <p>{{ r.preparation_time }}</p>
+                {#                Ilosc porcji#}
+                <p>{{ r.servings_count }}</p>
+                {#                Trudnosc#}
+                <p>{{ r.get_difficulty_display }}</p>
+                {#            Data dodania#}
+                <p>{{ r.created_on }}</p>
+                {#            Głosy#}
+                <p>{{ r.vote_score }}</p>
+                {% if r.icon %}
+                    <img src="{{ r.icon.url }}">
+                {% endif %}
+            </li>
+        {% endfor %}
     </ul>
 {% endblock %}
