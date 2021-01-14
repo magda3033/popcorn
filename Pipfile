@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pylint = "*"
 
 [packages]
 django-extensions = "*"
@@ -13,7 +14,14 @@ django-registration = "==3.1.1"
 Django = "==3.1.2"
 pillow = "*"
 django-summernote = "*"
+<<<<<<< Updated upstream
 mixer = "*"
+=======
+bs4 = "*"
+slugify = "*"
+ipykernel = "*"
+awesome-slugify = "*"
+>>>>>>> Stashed changes
 
 [requires]
 python_version = "3.7"
